@@ -1,4 +1,6 @@
 <template>
+  <div class="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-md flex items-center space-x-4"></div>
+  <!-- <div class="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-md flex items-center space-x-4"></div> -->
   <div style="width:200px;height:200px;background:red">click me</div>
   <math-field>f(x) = x + 1</math-field>
   <math-field>

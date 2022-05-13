@@ -7,6 +7,7 @@ import { Image } from "ant-design-vue";
 // import './plugins/mathlive.js'
 import './plugins/mathquill-0.10.1/mathquill.css'
 import './plugins/mathquill-0.10.1/mathquill.js'
+import './assets/css/index.css'
 import './assets/css/css.css'
 
 const APP = createApp(App)
