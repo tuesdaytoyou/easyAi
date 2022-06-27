@@ -4,7 +4,6 @@ import router from './router/index'
 import store from './store/index'
 import { Image } from "ant-design-vue";
 // import "ant-design-vue/dist/antd.css";
-// import './plugins/mathlive.js'
 import './plugins/mathquill-0.10.1/mathquill.css'
 import './plugins/mathquill-0.10.1/mathquill.js'
 import './assets/css/index.css'
