@@ -1,7 +1,7 @@
 <template>
-  <math-field>
-      x=\frac{-b\pm \sqrt{b^2-4ac}}{2a}
-  </math-field>
+  <router-link :to="{name:'test'}">test</router-link>
+  <div></div>
+  <router-link :to="{name:'math'}">math</router-link>
 </template>
 
 <script setup lang="ts">
