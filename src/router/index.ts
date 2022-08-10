@@ -16,6 +16,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'math',
     component: () => import('@/views/math.vue') // 建议进行路由懒加载，优化访问性能
   },
+  {
+    path: '/homepage',
+    name: 'homepage',
+    component: () => import('@/views/homepage.vue') // 建议进行路由懒加载，优化访问性能
+  },
 ]
 
 const router = createRouter({
