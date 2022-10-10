@@ -68,7 +68,7 @@ let listenClick = () => {
 };
 // onMounted(listenClick);
 const getImage = (name: string): string => {
-  return new URL(`../assets/images/${name}.png`, import.meta.url).href;
+  return new URL(`../assets/images/math/${name}.png`, import.meta.url).href;
 };
 const getSvg = (name: string): string => {
   return new URL(`../assets/icons/${name}.svg`, import.meta.url).href;

@@ -21,6 +21,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'homepage',
     component: () => import('@/views/homepage.vue') // 建议进行路由懒加载，优化访问性能
   },
+  {
+    path: '/matheditor',
+    name: 'matheditor',
+    component: () => import('@/views/matheditor.vue') // 建议进行路由懒加载，优化访问性能
+  },
 ]
 
 const router = createRouter({

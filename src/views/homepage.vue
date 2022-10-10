@@ -80,11 +80,35 @@
         <div class="gray-btn"><span>创建</span></div>
       </div>
       <div>
-        <div class="model-list">
-          <div class="model-img"><img /></div>
-          <div class="model-title"><span>多层感知器</span><span>Multi-Layer Perception (MLP)</span></div>
-          <div class="model-btn">使用</div>
-          <div class="model-arrow"></div>
+        <div class="model-list flex justify-center items-center">
+          <div class="model-img"><img :src="getImage('home-card1')" /></div>
+          <div class="model-title"><p>多层感知器</p><p>Multi-Layer Perception (MLP)</p></div>
+          <div class="blue-btn"><span>使用</span></div>
+          <div class="model-arrow"><img :src="getImage('model-arrow')" /></div>
+        </div>
+        <div class="model-script">
+          <div class="script-title">认识MLP</div>
+          <div class="script-p">MLP由三层组成——输入层、隐藏层和输出层。输入层仅接收输入，隐藏层处理输入，输出层生成结果。基本上，每一层都要训练权值。
+                                使用MLP用于：Tabular data 列表数据，Image data 图像数据，Text data 文本数据。</div>
+          <div class="script-title">多层感知器的优势</div>
+          <div class="script-p">多层感知器能够学习任意非线性函数。因此，这些网络被普遍称为通用函数逼近器。通用逼近背后的主要原因之一是激活函数(activation function)。激活函数将非线性特征引入网络中，有助于网络学习输入和输出之间的复杂关系。</div>
+          <div class="script-img"><img /></div>
+          <div class="script-title">关于MLP更多学习入口</div>
+          <div class="script-link"><a>Crash Course in Convolutional Neural Networks for Machine Learning</a></div>
+          <div class="script-link"><a>Crash Course in Convolutional Neural Networks for Machine Learning</a></div>
+          <div class="script-img"><img /></div>
+        </div>
+        <div class="model-list flex justify-center items-center">
+          <div class="model-img"><img :src="getImage('home-card1')" /></div>
+          <div class="model-title"><p>多层感知器</p><p>Multi-Layer Perception (MLP)</p></div>
+          <div class="blue-btn"><span>使用</span></div>
+          <div class="model-arrow"><img :src="getImage('model-arrow')" /></div>
+        </div>
+        <div class="model-list flex justify-center items-center">
+          <div class="model-img"><img :src="getImage('home-card1')" /></div>
+          <div class="model-title"><p>多层感知器</p><p>Multi-Layer Perception (MLP)</p></div>
+          <div class="blue-btn"><span>使用</span></div>
+          <div class="model-arrow"><img :src="getImage('model-arrow')" /></div>
         </div>
       </div>
     </div>
@@ -98,161 +122,5 @@ const getImage = (name: string): string => {
 const currentStep = ref(0);
 </script>
 <style scoped>
-.ai-header {
-  height: 120px;
-  width: 100%;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-}
-.type-box {
-  width: 496px;
-  height: 626px;
-  display: inline-block;
-  border: 1px solid #000000;
-  border-radius: 20px;
-  margin: 23px;
-  position: relative;
-}
-.type-image {
-  border-radius: 20px;
-}
-.type-title {
-  position: absolute;
-  width: 184px;
-  height: 46px;
-  left: 31px;
-  top: 313px;
-  font-family: "PingFang SC";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 40px;
-  line-height: 56px;
-}
-.type-p {
-  position: absolute;
-  width: 434px;
-  height: 50px;
-  left: 31px;
-  top: 391px;
-  font-family: "PingFang SC";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 34px;
-}
-.type-btn {
-  position: absolute;
-  width: 432px;
-  height: 66.55px;
-  left: 31px;
-  top: 524px;
-  background: #4844a3;
-  border-radius: 10px;
-}
-.type-btn span {
-  position: absolute;
-  width: 145px;
-  height: 35px;
-  left: 145px;
-  top: 10px;
-  font-family: "PingFang SC";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 32px;
-  line-height: 45px;
-  color: #ffffff;
-}
-.data-box {
-  width: 401px;
-  height: 423px;
-  display: inline-block;
-  border: 1px solid #000000;
-  border-radius: 10px;
-  margin: 23px;
-  position: relative;
-}
-.data-image {
-  border-radius: 10px;
-}
-.data-title {
-  position: absolute;
-  width: 103px;
-  height: 34px;
-  left: 53px;
-  top: 249px;
-  font-family: "PingFang SC";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 34px;
-}
-.data-p {
-  position: absolute;
-  width: 434px;
-  height: 50px;
-  left: 53px;
-  top: 291px;
-  font-family: "PingFang SC";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 28px;
-}
-.data-btn {
-  position: absolute;
-  width: 293px;
-  height: 54px;
-  left: 53px;
-  top: 335px;
-  background: #4844a3;
-  border-radius: 10px;
-}
-.data-btn span {
-  position: absolute;
-  width: 145px;
-  height: 35px;
-  left: 80px;
-  top: 5px;
-  font-family: "PingFang SC";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 32px;
-  line-height: 45px;
-  color: #ffffff;
-}
-.blue-btn{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 148px;
-  height: 67px;
-  background: #4844A3;
-  border-radius: 10px;
-  margin: 13px;
-}
-.blue-btn span{
-  font-family: 'PingFang SC';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 32px;
-  line-height: 45px;
-  color: #ffffff;
-}
-.gray-btn{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 148px;
-  height: 67px;
-  background: #DEDCFC;
-  border-radius: 10px;
-  margin: 13px;
-}
-.gray-btn span{
-  font-family: 'PingFang SC';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 32px;
-  line-height: 45px;
-  color: #4844A3;
-}
+p{margin: 0;}
 </style>

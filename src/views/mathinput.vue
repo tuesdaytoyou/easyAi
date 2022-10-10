@@ -1,12 +1,6 @@
 <template>
-  <div class="m-52">
-    <p>Type math here:</p>
-    <div :id="fieldId" style="background:#ededed;padding: 4px 6px;border: 1px solid transparent;"></div>
-    <!-- <div :id="fieldId" class="border-1 border-solid"></div> -->
-    <p>
-      LaTeX of what you typed:
-      <span id="latex"></span>
-    </p>
+  <div style="display:inline-block;margin:4px">
+    <div :id="fieldId" style="min-width:32px;height:32px;background:rgba(144, 232, 255, 0.1);border: 1px solid #1ABEFF;"></div>
     <div
       class="toolbar"
       :style="{top: toolbarTop,left:toolbarLeft}"

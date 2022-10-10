@@ -22,3 +22,221 @@ a{outline-style:none;color:#333;text-decoration:none}
 a:hover{color:#000;}
 i,em{font-style:normal;}
 img{border:0;} */
+.ai-header {
+  height: 120px;
+  width: 100%;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+.type-box {
+  width: 496px;
+  height: 626px;
+  display: inline-block;
+  border: 1px solid #000000;
+  border-radius: 20px;
+  margin: 23px;
+  position: relative;
+}
+.type-image {
+  border-radius: 20px;
+}
+.type-title {
+  position: absolute;
+  width: 184px;
+  height: 46px;
+  left: 31px;
+  top: 313px;
+  font-family: "PingFang SC";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 56px;
+}
+.type-p {
+  position: absolute;
+  width: 434px;
+  height: 50px;
+  left: 31px;
+  top: 391px;
+  font-family: "PingFang SC";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 34px;
+}
+.type-btn {
+  position: absolute;
+  width: 432px;
+  height: 66.55px;
+  left: 31px;
+  top: 524px;
+  background: #4844a3;
+  border-radius: 10px;
+}
+.type-btn span {
+  position: absolute;
+  width: 145px;
+  height: 35px;
+  left: 145px;
+  top: 10px;
+  font-family: "PingFang SC";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 45px;
+  color: #ffffff;
+}
+.data-box {
+  width: 401px;
+  height: 423px;
+  display: inline-block;
+  border: 1px solid #000000;
+  border-radius: 10px;
+  margin: 23px;
+  position: relative;
+}
+.data-image {
+  border-radius: 10px;
+}
+.data-title {
+  position: absolute;
+  width: 103px;
+  height: 34px;
+  left: 53px;
+  top: 249px;
+  font-family: "PingFang SC";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 34px;
+}
+.data-p {
+  position: absolute;
+  width: 434px;
+  height: 50px;
+  left: 53px;
+  top: 291px;
+  font-family: "PingFang SC";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 28px;
+}
+.data-btn {
+  position: absolute;
+  width: 293px;
+  height: 54px;
+  left: 53px;
+  top: 335px;
+  background: #4844a3;
+  border-radius: 10px;
+}
+.data-btn span {
+  position: absolute;
+  width: 145px;
+  height: 35px;
+  left: 80px;
+  top: 5px;
+  font-family: "PingFang SC";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 45px;
+  color: #ffffff;
+}
+.blue-btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 148px;
+  height: 67px;
+  background: #4844A3;
+  border-radius: 10px;
+  margin: 13px;
+}
+.blue-btn span{
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 45px;
+  color: #ffffff;
+}
+.gray-btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 148px;
+  height: 67px;
+  background: #DEDCFC;
+  border-radius: 10px;
+  margin: 13px;
+}
+.gray-btn span{
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 45px;
+  color: #4844A3;
+}
+.model-list{
+  width: 1520px;
+  height: 202px;
+  background: #FFFFFF;
+  border: 1px solid #000000;
+  border-left: 10px solid #FFC107;
+  border-radius: 10px;
+}
+.model-img img{
+  height: 162px;
+}
+.model-title{
+  margin:0 40px;
+  width: 800px;
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 45px;
+}
+.model-arrow{
+  margin: 20px
+}
+.model-script{
+  width: 1380px;
+  margin: 40px 70px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.script-title{
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 74px;
+  margin: 10px 0;
+  padding:0 20px;
+  height: 74px;
+  background: #EFEFEF;
+  border-radius: 10px;
+}
+.script-p{
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 34px;
+  margin: 10px 0;
+  padding:0 20px;
+}
+.script-link{
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 34px;
+  margin: 10px 0;
+  padding:0 20px;
+  color: #001AFF;
+}
