@@ -1,6 +1,6 @@
 <template>
   <div style="display:inline-block;margin:4px">
-    <div :id="fieldId" style="min-width:32px;height:32px;background:rgba(144, 232, 255, 0.1);border: 1px solid #1ABEFF;"></div>
+    <div :id="fieldId" style="min-width:32px;min-height:32px;background:rgba(144, 232, 255, 0.1);border: 1px solid #1ABEFF;"></div>
     <div
       class="toolbar"
       :style="{top: toolbarTop,left:toolbarLeft}"
@@ -10,14 +10,14 @@
       <div class="toolbar-arrow" :style="{left:toolArrowLeft}"></div>
       <div contenteditable="false" class="toolbar-primary" :style="{left:toolPrimaryLeft}">
         <ul>
-          <li v-for="(li, index) in primaryList">
+          <li v-for="(li, index) in primaryList" @mouseover="secondaryShow(index,'over')">
             <img :src="li.src" class="panel_box" />
           </li>
         </ul>
       </div>
-      <div contenteditable="false" class="toolbar-secondary" style="left:-150px;">
-        <ul v-for="secondary in secondaryList">
-          <li @click="mathCommand(item.v,item.i)" v-for="(item, index) in secondary">
+      <div contenteditable="false" class="toolbar-secondary" :style="{left:toolSecondaryLeft}">
+        <ul v-for="(secondary, secIndex) in secondaryList" style="width:500px">
+          <li @click="mathCommand(item.v,item.i)" v-for="(item, index) in secondary" v-show="secondaryShowList[secIndex]">
             <img :src="item.k" class="panel_box" />
           </li>
         </ul>
@@ -34,7 +34,6 @@ let mathField: any;
 let mathFieldDom: any;
 let initMathQuill = function() {
   mathFieldDom = document.getElementById(fieldId);
-  let latexSpan = document.getElementById("latex");
 
   let MQ = window.MathQuill.getInterface(2); // for backcompat
   mathField = MQ.MathField(mathFieldDom, {
@@ -50,11 +49,10 @@ let initMathQuill = function() {
     handlers: {
       edit: function(mathField: any) {
         // var texto = mathField.text();
-        latexSpan!.textContent = mathField.latex();
-        //that.$emit('update:value',mathField.latex())
         console.log(mathField);
         const controller = mathField.__controller;
         isFoucs = controller.cursor;
+        setBoxStyle()
       },
       enter: function() {
         console.log("enter");
@@ -76,12 +74,14 @@ let toolbarTop = ref("0px");
 let toolbarLeft = ref("0px");
 let toolArrowLeft = ref("0px");
 let toolPrimaryLeft = ref("0px");
+let toolSecondaryLeft = ref("0px")
 const setBoxStyle = () => {
   toolbarTop.value =
     mathFieldDom!.offsetTop + mathFieldDom!.offsetHeight + "px";
   toolbarLeft.value = mathFieldDom!.offsetLeft + "px";
   toolArrowLeft.value = mathFieldDom!.offsetWidth / 2 + "px";
-  toolPrimaryLeft.value = mathFieldDom!.offsetWidth / 2 - 45 + "px";
+  toolPrimaryLeft.value = mathFieldDom!.offsetWidth / 2 - 70 + "px";
+  toolSecondaryLeft.value = mathFieldDom!.offsetWidth / 2 - 250 + "px";
 };
 
 let showToolbar = ref(false);
@@ -89,6 +89,7 @@ let listenClick = () => {
   addEventListener("click", e => {
     if (mathFieldDom!.classList.value.includes("mq-focused")) {
       setBoxStyle();
+      secondaryShowList.value = [false,false,false,false,false,false]
       showToolbar.value = true;
     } else {
       showToolbar.value = false;
@@ -186,9 +187,27 @@ const mathCommand = (cmd: string,type: string) => {
     mathField.cmd(cmd)
   }
 };
+let secondaryShowList = ref([false,false,false,false,false,false])
+const secondaryShow = (index:number, type:string) => {
+  if(type == 'over'){
+    secondaryShowList.value = [false,false,false,false,false,false]
+    if(index == 0){
+      secondaryShowList.value[0] = true;
+      secondaryShowList.value[1] = true;
+    }else if(index == 1){
+      secondaryShowList.value[2] = true;
+      secondaryShowList.value[3] = true;
+      secondaryShowList.value[4] = true;
+    }else if(index == 2){
+      secondaryShowList.value[5] = true;
+      secondaryShowList.value[6] = true;
+    }
+  }
+}
 </script>
 <style scoped>
 .toolbar {
+  z-index: 100;
   position: absolute;
   bottom: auto;
   display: block;
@@ -201,13 +220,12 @@ const mathCommand = (cmd: string,type: string) => {
   border-right: 10px solid transparent;
   z-index: 1;
   border-bottom: 10px solid #2a2a2a;
-  display: none;
 }
 .toolbar-primary {
   background: #2a2a2a;
   position: absolute;
   top: 10px;
-  display: none;
+  border-radius: 5px;
 }
 .toolbar-primary ul,
 .toolbar-secondary ul {
@@ -218,13 +236,17 @@ const mathCommand = (cmd: string,type: string) => {
 }
 .toolbar-primary li,
 .toolbar-secondary li {
-  width: 50px;
+  /* width: 50px; */
+  min-width: 50px;
   height: 50px;
   color: white;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.toolbar-secondary li img{
+  height: 50px;
 }
 .toolbar-primary li:hover,
 .toolbar-secondary li:hover {
@@ -238,7 +260,9 @@ const mathCommand = (cmd: string,type: string) => {
 .toolbar-secondary {
   background: #2a2a2a;
   position: absolute;
-  top: 40px;
+  top: 60px;
+  border-radius: 5px;
+  margin-top: 5px;
 }
 /* background: #f7f7f7;
     -moz-box-shadow: inset 0 0 3px #b4b4b4;
