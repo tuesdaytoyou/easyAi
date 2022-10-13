@@ -4,6 +4,7 @@ import router from './router/index'
 import store from './store/index'
 import Antd from "ant-design-vue";
 import "ant-design-vue/dist/antd.css";
+import './plugins/jquery.min.js'
 import './plugins/mathquill-0.10.1/mathquill.css'
 import './plugins/mathquill-0.10.1/mathquill.js'
 import './plugins/mathlive.js'

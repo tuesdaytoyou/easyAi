@@ -71,6 +71,7 @@ img{border:0;} */
   top: 524px;
   background: #4844a3;
   border-radius: 10px;
+  cursor: pointer;
 }
 .type-btn span {
   position: absolute;
@@ -99,7 +100,7 @@ img{border:0;} */
 }
 .data-title {
   position: absolute;
-  width: 103px;
+  /* width: 103px; */
   height: 34px;
   left: 53px;
   top: 249px;
@@ -122,26 +123,17 @@ img{border:0;} */
   line-height: 28px;
 }
 .data-btn {
+  display: flex;
   position: absolute;
   width: 293px;
   height: 54px;
   left: 53px;
   top: 335px;
-  background: #4844a3;
   border-radius: 10px;
+  cursor:pointer;
 }
-.data-btn span {
-  position: absolute;
-  width: 145px;
-  height: 35px;
-  left: 80px;
-  top: 5px;
-  font-family: "PingFang SC";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 32px;
-  line-height: 45px;
-  color: #ffffff;
+.data-btn div {
+  height: 54px;
 }
 .blue-btn{
   display: flex;
