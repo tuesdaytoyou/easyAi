@@ -134,24 +134,68 @@
           </div>
         </div>
       </div>
+      <div class="flex justify-center items-center" v-show="currentStep == 2" style="margin:0 100px">
+        <div class="w-80">
+          <div class="border rounded h-14 flex justify-center items-center font-p">超参数</div>
+          <div>
+            <div>
+              <div>
+                <div>
+                  <a-checkbox v-model:checked="checked">Checkbox</a-checkbox>
+                  <!-- <img :src="getImage('icon_back')" /> -->
+                </div>
+                <div class="pl-8">
+                  <div class="my-2"><a-checkbox v-model:checked="checked">Checkbox</a-checkbox></div>
+                  <div class="my-2"><a-checkbox v-model:checked="checked">Checkbox</a-checkbox></div>
+                  <div class="my-2"><a-checkbox v-model:checked="checked">Checkbox</a-checkbox></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="data-btn">
+            <div class="gray-btn"><span>查看</span></div>
+            <div class="blue-btn"><span>使用</span></div>
+          </div>
+          <div></div>
+        </div>
+      </div>
     </div>
   </div>
-  <div v-show="mainDlg == 'doc'" style="background: #E5E5E5;">
-    <div class="ai-header flex items-center">
+  <div v-show="mainDlg == 'doc'" style="background: #E5E5E5;height: 100vh;">
+    <div class="ai-header flex items-center" style="box-shadow: none;height: 104px;">
       <img class="header-img" :src="getImage('icon_back')" />
       <div class="blue-btn" style="position: absolute;right: 50px;"><span>使用</span></div>
     </div>
-    <div class="flex justify-center items-center">
+    <div class="flex justify-center items-center" style="margin-top:32px">
       <div class="doc_side">
-        <div class="doc_data"></div>
+        <div class="doc_data flex items-center relative">
+          <div class="absolute left-2" style="">数据集</div>
+          <img class="absolute right-2" :src="getImage('icon_add_file')" />
+        </div>
         <ul class="doc_type">
-          <li></li>
+          <li class="flex items-center cur relative h-12">
+            <p class="absolute left-2" style="color: #121212;">Cat</p>
+            <p class="absolute right-2" style="color: #979797;">500</p>
+          </li>
+          <li class="flex items-center relative h-12">
+            <p class="absolute left-2" style="color: #121212;">Dog</p>
+            <p class="absolute right-2" style="color: #979797;">500</p>
+          </li>
         </ul>
       </div>
-      <div class="doc_main">
-        <div class="doc_upload"></div>
-        <div class="doc_imgs">
-
+      <div class="doc_main px-14 py-7">
+        <div class="doc_upload h-12 flex items-center">
+          上传
+        </div>
+        <div class="doc_imgs flex items-center flex-wrap">
+          <div class="relative" v-for="item in 10">
+            <img class="mx-4 my-3" :src="getImage('img_cat')" />
+            <img class="absolute top-5 right-6" :src="getImage('icon_delete')" />
+            <div class="absolute bottom-5 left-6 px-2 text-center rounded" style="background: #FF3B5C;color: #ffffff;">
+              cat</div>
+          </div>
         </div>
       </div>
     </div>
@@ -165,15 +209,18 @@ const getImage = (name: string): string => {
 const currentStep = ref(0);
 let typeSelectDlg = ref(true)
 let mainDlg = ref('main')
+let checked = ref(true)
 </script>
 <style scoped>
 p {
   margin: 0;
 }
+
 .header-img {
   margin-left: 50px;
   cursor: pointer;
 }
+
 .header-title {
   margin-left: 10px;
   font-family: 'PingFang SC';
@@ -182,6 +229,7 @@ p {
   font-size: 40px;
   line-height: 56px;
 }
+
 .data-add {
   font-family: 'PingFang SC';
   font-style: normal;
@@ -189,18 +237,61 @@ p {
   font-size: 20px;
   line-height: 28px;
 }
+
 .data-add img {
   cursor: pointer;
 }
+
 .data-add div {
   margin-top: 20px;
 }
-.doc_side{
+
+.doc_side {
+  background-color: #ffffff;
+  border-radius: 8px;
+  margin-right: 24px;
   width: 244px;
-  height: 859px;
+  height: 800px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
 }
-.doc_main{
+
+.doc_main {
+  background-color: #ffffff;
+  border-radius: 8px;
   width: 1164px;
-  height: 859px;
+  height: 800px;
+}
+
+.doc_data {
+  height: 48px;
+  font-family: 'Proxima Nova';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #8A8A8A;
+}
+
+.doc_type {
+  font-family: 'Proxima Nova';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.doc_type .cur {
+  background: #FEEDEF;
+}
+
+.doc_type .cur p:first-child {
+  color: #F60457 !important;
+}
+.font-p{
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  color: #4844A3;
 }
 </style>
