@@ -62,7 +62,7 @@
             <p class="data-p">该数据集包含猫狗照片各5000张。</p>
             <div class="data-btn">
               <div class="gray-btn" @click="mainDlg = 'doc'"><span>查看</span></div>
-              <div class="blue-btn"><span>使用</span></div>
+              <div class="blue-btn" @click="currentStep = 1"><span>使用</span></div>
             </div>
           </div>
         </div>
@@ -88,8 +88,8 @@
       </div>
       <div v-show="currentStep == 1" style="margin:0 100px">
         <div class="flex">
-          <div class="blue-btn"><span>模型库</span></div>
-          <div class="gray-btn"><span>创建</span></div>
+          <div class="blue-btn cursor-pointer"><span>模型库</span></div>
+          <div class="gray-btn cursor-pointer"><span>创建</span></div>
         </div>
         <div>
           <div class="model-list flex justify-center items-center">
@@ -98,10 +98,13 @@
               <p>多层感知器</p>
               <p>Multi-Layer Perception (MLP)</p>
             </div>
-            <div class="blue-btn"><span>使用</span></div>
-            <div class="model-arrow"><img :src="getImage('model-arrow')" /></div>
+            <div class="blue-btn cursor-pointer"><span>使用</span></div>
+            <div class="model-arrow cursor-pointer" @click="modelScript = !modelScript">
+              <img v-show="!modelScript" :src="getImage('model-arrow')" />
+              <img v-show="modelScript" :src="getImage('model-arrow-up')" />
+            </div>
           </div>
-          <div class="model-script">
+          <div class="model-script" style="background: #FCFBF8;" v-show="modelScript">
             <div class="script-title">认识MLP</div>
             <div class="script-p">MLP由三层组成——输入层、隐藏层和输出层。输入层仅接收输入，隐藏层处理输入，输出层生成结果。基本上，每一层都要训练权值。
               使用MLP用于：Tabular data 列表数据，Image data 图像数据，Text data 文本数据。</div>
@@ -165,21 +168,21 @@
   </div>
   <div v-show="mainDlg == 'doc'" style="background: #E5E5E5;height: 100vh;">
     <div class="ai-header flex items-center" style="box-shadow: none;height: 104px;">
-      <img class="header-img" :src="getImage('icon_back')" />
-      <div class="blue-btn" style="position: absolute;right: 50px;"><span>使用</span></div>
+      <img class="header-img" :src="getImage('icon_back')" @click="mainDlg = 'main'" />
+      <div class="blue-btn cursor-pointer" style="position: absolute;right: 50px;" @click="mainDlg = 'main';currentStep = 1"><span>使用</span></div>
     </div>
     <div class="flex justify-center items-center" style="margin-top:32px">
       <div class="doc_side">
         <div class="doc_data flex items-center relative">
           <div class="absolute left-2" style="">数据集</div>
-          <img class="absolute right-2" :src="getImage('icon_add_file')" />
+          <img class="absolute right-2 cursor-pointer" :src="getImage('icon_add_file')" />
         </div>
         <ul class="doc_type">
-          <li class="flex items-center cur relative h-12">
+          <li class="flex items-center relative h-12 cursor-pointer" :class="{cur:doc_type == 'cat'}" @click="doc_type = 'cat'">
             <p class="absolute left-2" style="color: #121212;">Cat</p>
             <p class="absolute right-2" style="color: #979797;">500</p>
           </li>
-          <li class="flex items-center relative h-12">
+          <li class="flex items-center relative h-12 cursor-pointer" :class="{cur:doc_type == 'dog'}" @click="doc_type = 'dog'">
             <p class="absolute left-2" style="color: #121212;">Dog</p>
             <p class="absolute right-2" style="color: #979797;">500</p>
           </li>
@@ -187,14 +190,13 @@
       </div>
       <div class="doc_main px-14 py-7">
         <div class="doc_upload h-12 flex items-center">
-          上传
+          <img class="mx-4 my-3 cursor-pointer" :src="getImage('icon_upload')" />
         </div>
         <div class="doc_imgs flex items-center flex-wrap">
-          <div class="relative" v-for="item in 10">
-            <img class="mx-4 my-3" :src="getImage('img_cat')" />
+          <div class="relative" v-for="item in 20">
+            <img class="mx-4 my-3 w-40 h-36" :src="getImageDataset(String(item))" />
             <img class="absolute top-5 right-6" :src="getImage('icon_delete')" />
-            <div class="absolute bottom-5 left-6 px-2 text-center rounded" style="background: #FF3B5C;color: #ffffff;">
-              cat</div>
+            <div class="absolute bottom-5 left-6 px-2 text-center rounded" style="background: #FF3B5C;color: #ffffff;">{{doc_type}}</div>
           </div>
         </div>
       </div>
@@ -203,13 +205,18 @@
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
-const getImage = (name: string): string => {
-  return new URL(`../assets/images/home/${name}.png`, import.meta.url).href;
-};
 const currentStep = ref(0);
 let typeSelectDlg = ref(true)
 let mainDlg = ref('main')
 let checked = ref(true)
+let doc_type = ref('cat')
+let modelScript = ref(false)
+const getImage = (name: string): string => {
+  return new URL(`../assets/images/home/${name}.png`, import.meta.url).href;
+};
+const getImageDataset = (name: string): string => {
+  return new URL(`../assets/images/home/${doc_type.value}/${name}.jpg`, import.meta.url).href;
+};
 </script>
 <style scoped>
 p {

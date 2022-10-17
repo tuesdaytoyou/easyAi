@@ -4,7 +4,12 @@ module.exports = {
   theme: {
     theme: {
       fontFamily: {
-       'sc': ['PingFang SC'],
+        'sc': ['PingFang SC'],
+      }
+    },
+    extend: {
+      colors: {
+        statehover: '#475258'
       }
     },
     backgroundColor: theme => ({

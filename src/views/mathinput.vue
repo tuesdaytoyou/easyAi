@@ -1,6 +1,6 @@
 <template>
   <div style="display:inline-block;margin:4px">
-    <div :id="fieldId" style="min-width:32px;min-height:32px;background:rgba(144, 232, 255, 0.1);border: 1px solid #1ABEFF;"></div>
+    <div :id="fieldId" style="min-width:32px;min-height:32px;" :style="borderStyle"></div>
     <div
       class="toolbar"
       :style="{top: toolbarTop,left:toolbarLeft}"
@@ -49,6 +49,7 @@ let initMathQuill = function() {
     handlers: {
       edit: function(mathField: any) {
         // var texto = mathField.text();
+        borderStyle.value = 'border: none;background: #111A20;'
         console.log(mathField);
         const controller = mathField.__controller;
         isFoucs = controller.cursor;
@@ -204,6 +205,7 @@ const secondaryShow = (index:number, type:string) => {
     }
   }
 }
+let borderStyle = ref('border: 1px solid #1ABEFF;background:rgba(144, 232, 255, 0.1);')
 </script>
 <style scoped>
 .toolbar {

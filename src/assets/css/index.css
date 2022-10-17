@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.mq-editable-field .mq-cursor {
+  border-left: 1px solid white!important;
+}
+.mq-math-mode .mq-empty {
+  background: rgba(213, 223, 252, 1);
+}
