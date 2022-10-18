@@ -140,7 +140,7 @@ const secondaryList = [
     { k: getImage('3-3'), v: "", i: "" },
     { k: getImage('3-4'), v: "\\sqrt", i: "" },
     { k: getImage('3-5'), v: "\\frac", i: "" },
-    { k: getImage('3-6'), v: "<", i: "" },
+    { k: getImage('3-6'), v: "", i: "" },
     { k: getImage('3-7'), v: "|", i: "" },
     { k: getImage('3-8'), v: "\\lfloor\\left\\{\\right\\}\\rfloor", i: "write" },
     { k: getImage('3-9'), v: "\\lceil\\left\\{\\right\\}\\rceil", i: "write" },

@@ -9,7 +9,8 @@ module.exports = {
     },
     extend: {
       colors: {
-        statehover: '#475258'
+        statehover: '#475258',
+        textTitle: '#19BEFF',
       }
     },
     backgroundColor: theme => ({

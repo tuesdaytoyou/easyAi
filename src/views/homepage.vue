@@ -12,7 +12,7 @@
         <div>
           <p class="type-title">图像分类</p>
           <p class="type-p">分类识别是监督式机器学习最常见的使用场景。</p>
-          <div class="type-btn" @click="typeSelectDlg = false">
+          <div class="type-btn" @click="typeSelectDlg = false;currentStep=0">
             <span>开始学习</span>
           </div>
         </div>
@@ -47,9 +47,9 @@
         <a-steps v-model:current="currentStep">
           <a-step @click="currentStep = 0" title="数据集" />
           <a-step @click="currentStep = 1" title="模型" />
-          <a-step @click="currentStep = 3" title="参数调节" />
-          <a-step @click="currentStep = 4" title="训练" />
-          <a-step @click="currentStep = 5" title="结果" />
+          <a-step @click="currentStep = 2" title="参数调节" />
+          <a-step @click="currentStep = 3" title="训练" />
+          <a-step @click="currentStep = 4" title="结果" />
         </a-steps>
       </div>
       <div class="flex justify-center items-center" style="margin-top:107px" v-show="currentStep == 0">
@@ -89,7 +89,7 @@
       <div v-show="currentStep == 1" style="margin:0 100px">
         <div class="flex">
           <div class="blue-btn cursor-pointer"><span>模型库</span></div>
-          <div class="gray-btn cursor-pointer"><span>创建</span></div>
+          <div class="gray-btn cursor-pointer" @click="jumpTo('matheditor')"><span>创建</span></div>
         </div>
         <div>
           <div class="model-list flex justify-center items-center">
@@ -98,7 +98,7 @@
               <p>多层感知器</p>
               <p>Multi-Layer Perception (MLP)</p>
             </div>
-            <div class="blue-btn cursor-pointer"><span>使用</span></div>
+            <div class="blue-btn cursor-pointer" @click="currentStep = 2"><span>使用</span></div>
             <div class="model-arrow cursor-pointer" @click="modelScript = !modelScript">
               <img v-show="!modelScript" :src="getImage('model-arrow')" />
               <img v-show="modelScript" :src="getImage('model-arrow-up')" />
@@ -111,11 +111,14 @@
             <div class="script-title">多层感知器的优势</div>
             <div class="script-p">多层感知器能够学习任意非线性函数。因此，这些网络被普遍称为通用函数逼近器。通用逼近背后的主要原因之一是激活函数(activation
               function)。激活函数将非线性特征引入网络中，有助于网络学习输入和输出之间的复杂关系。</div>
-            <div class="script-img"><img /></div>
+            <div class="script-img flex justify-center"><img :src="getImage('img_mlp')"/></div>
             <div class="script-title">关于MLP更多学习入口</div>
             <div class="script-link"><a>Crash Course in Convolutional Neural Networks for Machine Learning</a></div>
             <div class="script-link"><a>Crash Course in Convolutional Neural Networks for Machine Learning</a></div>
-            <div class="script-img"><img /></div>
+            <div class="script-title">模型编辑器</div>
+            <div class=" block">
+              <mathEditor :isShowTitle="false" :isShowFoot="false"></mathEditor>
+            </div>
           </div>
           <div class="model-list flex justify-center items-center">
             <div class="model-img"><img :src="getImage('home-card1')" /></div>
@@ -156,13 +159,13 @@
             </div>
           </div>
         </div>
-        <div>
+        <!-- <div>
           <div class="data-btn">
             <div class="gray-btn"><span>查看</span></div>
             <div class="blue-btn"><span>使用</span></div>
           </div>
           <div></div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -204,7 +207,11 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import mathEditor from "./matheditor.vue"
+const router = useRouter()
+const route = useRoute()
 const currentStep = ref(0);
 let typeSelectDlg = ref(true)
 let mainDlg = ref('main')
@@ -217,6 +224,17 @@ const getImage = (name: string): string => {
 const getImageDataset = (name: string): string => {
   return new URL(`../assets/images/home/${doc_type.value}/${name}.jpg`, import.meta.url).href;
 };
+
+const jumpTo = (route:string) => {
+  router.push({name: route})
+}
+onMounted(() => {
+  console.log(route)
+  if(route.params.currentStep){
+    typeSelectDlg.value = false
+    currentStep.value = Number(route.params.currentStep)
+  }
+})
 </script>
 <style scoped>
 p {
