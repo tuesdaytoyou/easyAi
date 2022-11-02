@@ -4,7 +4,6 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
-    ACheckbox: typeof import('ant-design-vue/es')['Checkbox']
     AInputNumber: typeof import('ant-design-vue/es')['InputNumber']
     ARadio: typeof import('ant-design-vue/es')['Radio']
     ARadioGroup: typeof import('ant-design-vue/es')['RadioGroup']
