@@ -11,6 +11,8 @@ module.exports = {
       colors: {
         statehover: '#475258',
         textTitle: '#19BEFF',
+        trainBtn: '#EDECF6',
+        trainBtnHover: '#E2DFF8',
       }
     },
     backgroundColor: theme => ({

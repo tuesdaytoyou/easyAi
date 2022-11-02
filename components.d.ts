@@ -5,6 +5,10 @@
 declare module 'vue' {
   export interface GlobalComponents {
     ACheckbox: typeof import('ant-design-vue/es')['Checkbox']
+    AInputNumber: typeof import('ant-design-vue/es')['InputNumber']
+    ARadio: typeof import('ant-design-vue/es')['Radio']
+    ARadioGroup: typeof import('ant-design-vue/es')['RadioGroup']
+    ASpin: typeof import('ant-design-vue/es')['Spin']
     AStep: typeof import('ant-design-vue/es')['Step']
     ASteps: typeof import('ant-design-vue/es')['Steps']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']

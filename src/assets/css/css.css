@@ -179,6 +179,9 @@ img{border:0;} */
   border-left: 10px solid #FFC107;
   border-radius: 10px;
 }
+.model-img{
+  width: 236px;
+}
 .model-img img{
   height: 162px;
 }

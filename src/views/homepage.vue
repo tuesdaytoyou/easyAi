@@ -2,98 +2,106 @@
   <div v-show="mainDlg == 'main'">
     <div class="ai-header flex items-center">
       <img class="header-img" :src="getImage('icon_mu')" />
-      <div class="header-title">交互式机器学习模型</div>
+      <div class="header-title" v-if="typeSelectDlg">交互式机器学习模型</div>
+      <div style="width:668px;margin-left:442px" v-else>
+        <a-steps v-model:current="currentStep">
+          <a-step title="创建数据集" />
+          <a-step title="创建模型" />
+          <a-step title="训练" />
+          <a-step title="结果" />
+        </a-steps>
+      </div>
     </div>
-    <div class="flex justify-center items-center" style="margin-top:107px" v-if="typeSelectDlg">
-      <div class="type-box">
-        <div>
-          <img class="type-image" :src="getImage('home-card1')" />
-        </div>
-        <div>
-          <p class="type-title">图像分类</p>
-          <p class="type-p">分类识别是监督式机器学习最常见的使用场景。</p>
-          <div class="type-btn" @click="typeSelectDlg = false;currentStep=0">
-            <span>开始学习</span>
+    <div class="flex justify-center items-center flex-col" style="margin-top:107px" v-if="typeSelectDlg">
+      <div class="font_tip_title" style="margin-left: -1370px;">开始一个新的项目</div>
+      <div class="flex justify-center items-center">
+        <div class="type-box">
+          <div>
+            <img class="type-image" :src="getImage('home-card1')" />
+          </div>
+          <div>
+            <p class="type-title">图像分类</p>
+            <p class="type-p">分类识别是监督式机器学习最常见的使用场景。</p>
+            <div class="type-btn" @click="typeSelectDlg = false;currentStep=0">
+              <span>开始学习</span>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="type-box">
-        <div>
-          <img class="type-image" :src="getImage('home-card2')" />
-        </div>
-        <div>
-          <p class="type-title">文本翻译</p>
-          <p class="type-p">文本翻译是最常见的机器学习应用方向，这里XXX。</p>
-          <div class="type-btn">
-            <span>开始学习</span>
+        <div class="type-box">
+          <div>
+            <img class="type-image" :src="getImage('home-card2')" />
+          </div>
+          <div>
+            <p class="type-title">文本翻译</p>
+            <p class="type-p">文本翻译是最常见的机器学习应用方向，这里XXX。</p>
+            <div class="type-btn">
+              <span>开始学习</span>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="type-box">
-        <div>
-          <img class="type-image" :src="getImage('home-card3')" />
-        </div>
-        <div>
-          <p class="type-title">预测</p>
-          <p class="type-p">分类识别是监督式机器学习最常见的使用场景。</p>
-          <div class="type-btn">
-            <span>开始学习</span>
+        <div class="type-box">
+          <div>
+            <img class="type-image" :src="getImage('home-card3')" />
+          </div>
+          <div>
+            <p class="type-title">预测</p>
+            <p class="type-p">分类识别是监督式机器学习最常见的使用场景。</p>
+            <div class="type-btn">
+              <span>开始学习</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div v-else>
-      <div style="margin: 50px 100px">
-        <a-steps v-model:current="currentStep">
-          <a-step @click="currentStep = 0" title="数据集" />
-          <a-step @click="currentStep = 1" title="模型" />
-          <a-step @click="currentStep = 2" title="参数调节" />
-          <a-step @click="currentStep = 3" title="训练" />
-          <a-step @click="currentStep = 4" title="结果" />
-        </a-steps>
-      </div>
-      <div class="flex justify-center items-center" style="margin-top:107px" v-show="currentStep == 0">
-        <div class="data-box">
-          <div class="flex justify-center items-center" style="height:220px">
-            <img class="data-image" :src="getImage('data_dog')" />
+      <div class="flex justify-center items-center flex-col" style="margin-top:107px" v-show="currentStep == 0">
+        <div class="font_tip_title" style="margin-left: -1100px;">开始一个新的项目</div>
+        <div class="flex justify-center items-center">
+          <div class="data-box">
+            <div class="flex justify-center items-center" style="height:220px">
+              <img class="data-image" :src="getImage('data_dog')" />
+            </div>
+            <div>
+              <p class="data-title">猫狗识别</p>
+              <p class="data-p">该数据集包含猫狗照片各5000张。</p>
+              <div class="data-btn">
+                <div class="gray-btn" @click="mainDlg = 'doc'"><span>查看</span></div>
+                <div class="blue-btn" @click="currentStep = 1"><span>使用</span></div>
+              </div>
+            </div>
           </div>
-          <div>
-            <p class="data-title">猫狗识别</p>
-            <p class="data-p">该数据集包含猫狗照片各5000张。</p>
-            <div class="data-btn">
-              <div class="gray-btn" @click="mainDlg = 'doc'"><span>查看</span></div>
-              <div class="blue-btn" @click="currentStep = 1"><span>使用</span></div>
+          <div class="data-box">
+            <div class="flex justify-center items-center" style="height:220px">
+              <img class="data-image" :src="getImage('data_number')" />
+            </div>
+            <div>
+              <p class="data-title">手写数字识别</p>
+              <p class="data-p">该数据集包含10000张书写数字。</p>
+              <div class="data-btn">
+                <div class="gray-btn"><span>查看</span></div>
+                <div class="blue-btn"><span>使用</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="data-box">
+            <div class="flex flex-col justify-center items-center h-full data-add">
+              <img class="data-image" :src="getImage('data_add')" />
+              <div>创建你自己的分类数据集</div>
             </div>
           </div>
         </div>
-        <div class="data-box">
-          <div class="flex justify-center items-center" style="height:220px">
-            <img class="data-image" :src="getImage('data_number')" />
-          </div>
-          <div>
-            <p class="data-title">手写数字识别</p>
-            <p class="data-p">该数据集包含10000张书写数字。</p>
-            <div class="data-btn">
-              <div class="gray-btn"><span>查看</span></div>
-              <div class="blue-btn"><span>使用</span></div>
-            </div>
-          </div>
-        </div>
-        <div class="data-box">
-          <div class="flex flex-col justify-center items-center h-full data-add">
-            <img class="data-image" :src="getImage('data_add')" />
-            <div>创建你自己的分类数据集</div>
-          </div>
-        </div>
       </div>
-      <div v-show="currentStep == 1" style="margin:0 100px">
-        <div class="flex">
+      <div v-show="currentStep == 1" style="margin: 0px 0 0 150px;">
+        <div class="flex mt-8">
           <div class="blue-btn cursor-pointer"><span>模型库</span></div>
           <div class="gray-btn cursor-pointer" @click="jumpTo('matheditor')"><span>创建</span></div>
         </div>
+        <div class="font_tip_title flex my-6">
+          以下机器学习模型为经典的分类模型，你可以尝试不同的模型，运行并查看效果
+        </div>
         <div>
           <div class="model-list flex justify-center items-center">
-            <div class="model-img"><img :src="getImage('home-card1')" /></div>
+            <div class="model-img flex justify-center items-center"><img :src="getImage('img_model1')" /></div>
             <div class="model-title">
               <p>多层感知器</p>
               <p>Multi-Layer Perception (MLP)</p>
@@ -121,16 +129,16 @@
             </div>
           </div>
           <div class="model-list flex justify-center items-center">
-            <div class="model-img"><img :src="getImage('home-card1')" /></div>
+            <div class="model-img flex justify-center items-center"><img :src="getImage('img_model2')" /></div>
             <div class="model-title">
-              <p>多层感知器</p>
-              <p>Multi-Layer Perception (MLP)</p>
+              <p>卷积神经网络</p>
+              <p>Convolutional neural networks (CNN)</p>
             </div>
             <div class="blue-btn"><span>使用</span></div>
             <div class="model-arrow"><img :src="getImage('model-arrow')" /></div>
           </div>
           <div class="model-list flex justify-center items-center">
-            <div class="model-img"><img :src="getImage('home-card1')" /></div>
+            <div class="model-img flex justify-center items-center"><img :src="getImage('img_model3')" /></div>
             <div class="model-title">
               <p>多层感知器</p>
               <p>Multi-Layer Perception (MLP)</p>
@@ -140,38 +148,91 @@
           </div>
         </div>
       </div>
-      <div class="flex justify-center items-center" v-show="currentStep == 2" style="margin:0 100px">
-        <div class="w-80">
-          <div class="border rounded h-14 flex justify-center items-center font-p">超参数</div>
-          <div>
+      <div class="flex justify-center" v-show="currentStep == 2 || currentStep == 3" style="margin:32px 100px">
+        <div class="w-80 bottom-2 rounded mr-3 p-7 bg-white">
+          <div class="font_help_title">训练</div>
+          <div class="font_help_title border-2 rounded-lg flex justify-center items-center h-14 my-4 cursor-pointer bg-trainBtn hover:bg-trainBtnHover"
+               :class="{train_btn:trainState}" @click="handleTrain()">
+            <div v-if="trainState"><a-spin :indicator="indicator" />训练中</div>
+            <div v-else>训练模型</div>
+          </div>
+          <div class="font_help_title my-4">
+            超参数调节
+          </div>
+          <div class="border-b">
+            <div class="font_help_p inline-block">Epochs</div>
+            <img class="inline-block ml-1 mb-1 cursor-pointer" :src="getImage('icon_help')" />
+            <div class="my-4">
+              <a-input-number v-model:value="epochsValue" :min="1" :max="100" controls="true" />
+            </div>
+          </div>
+          <div class="border-b">
+            <div class="font_help_p inline-block mt-2">Learning Rate</div>
+            <img class="inline-block ml-1 mb-1 cursor-pointer" :src="getImage('icon_help')" />
+            <div class="my-4">
+              <a-input-number v-model:value="rateValue" step="0.01" :min="0" :max="1" controls="true" />
+            </div>
+          </div>
+          <div class="border-b">
+            <div class="font_help_p inline-block mt-2">Batch Size</div>
+            <img class="inline-block ml-1 mb-1 cursor-pointer" :src="getImage('icon_help')" />
             <div>
-              <div>
-                <div>
-                  <a-checkbox v-model:checked="checked">Checkbox</a-checkbox>
-                  <!-- <img :src="getImage('icon_back')" /> -->
-                </div>
-                <div class="pl-8">
-                  <div class="my-2"><a-checkbox v-model:checked="checked">Checkbox</a-checkbox></div>
-                  <div class="my-2"><a-checkbox v-model:checked="checked">Checkbox</a-checkbox></div>
-                  <div class="my-2"><a-checkbox v-model:checked="checked">Checkbox</a-checkbox></div>
-                </div>
-              </div>
+              <a-radio-group v-model:value="batchValue">
+                <a-radio :style="radioStyle" :value="16">16</a-radio>
+                <a-radio :style="radioStyle" :value="32">32</a-radio>
+                <a-radio :style="radioStyle" :value="64">64</a-radio>
+                <a-radio :style="radioStyle" :value="128">128</a-radio>
+              </a-radio-group>
+            </div>
+          </div>
+          <div class="">
+            <div class="font_help_p inline-block mt-2">Optimizer</div>
+            <img class="inline-block ml-1 mb-1 cursor-pointer" :src="getImage('icon_help')" />
+            <div>
+              <a-radio-group v-model:value="optimizerValue">
+                <a-radio :style="radioStyle" value="Adam">Adam</a-radio>
+                <a-radio :style="radioStyle" value="RMSProp">RMSProp</a-radio>
+                <a-radio :style="radioStyle" value="SGD">SGD</a-radio>
+                <a-radio :style="radioStyle" value="Adamax">Adamax</a-radio>
+                <a-radio :style="radioStyle" value="AdamGrad">AdamGrad</a-radio>
+              </a-radio-group>
             </div>
           </div>
         </div>
-        <!-- <div>
-          <div class="data-btn">
-            <div class="gray-btn"><span>查看</span></div>
-            <div class="blue-btn"><span>使用</span></div>
+        <div class="bottom-2 rounded p-7 bg-white" style="width:1164px">
+          <div class="font_help_title">可视化面板</div>
+          <div class="relative w-full flex items-center rounded" style="height: 97px;">
+            <div class="title-font flex items-center rounded" style="background: #F2F2F2;">
+              <span class="px-5 py-2 cursor-pointer" :class="{help_cur: showDLgType == 1}" @click="showDLgType = 1">折线图</span>
+              <span class="px-5 py-2 cursor-pointer" :class="{help_cur: showDLgType == 2}" @click="showDLgType = 2">图像可视化</span>
+              <span class="px-5 py-2 cursor-pointer" :class="{help_cur: showDLgType == 3}" @click="showDLgType = 3">训练日志</span>
+            </div>
+            <div class="cursor-pointer ml-4"><img :src="getImage('icon_plus_box')" /></div>
           </div>
-          <div></div>
-        </div> -->
+          <div class="flex justify-center items-center h-4/5">
+            <div class="flex items-center flex-col" v-if="!trainEnd">
+              <img :src="getImage('img_train')" />
+              <div class="font_tarin">点击训练模型，查看更多数据</div>
+            </div>
+            <div v-else>
+              <iframe></iframe>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div v-show="mainDlg == 'doc'" style="background: #E5E5E5;height: 100vh;">
-    <div class="ai-header flex items-center" style="box-shadow: none;height: 104px;">
+  <div v-show="mainDlg == 'doc'" style="height: 100vh;">
+    <div class="ai-header flex items-center" style="height: 104px;">
       <img class="header-img" :src="getImage('icon_back')" @click="mainDlg = 'main'" />
+      <div style="width:668px;margin-left:442px">
+        <a-steps v-model:current="currentStep">
+          <a-step @click="currentStep = 0" title="创建数据集" />
+          <a-step @click="currentStep = 1" title="创建模型" />
+          <a-step @click="currentStep = 2" title="训练" />
+          <a-step @click="currentStep = 3" title="结果" />
+        </a-steps>
+      </div>
       <div class="blue-btn cursor-pointer" style="position: absolute;right: 50px;" @click="mainDlg = 'main';currentStep = 1"><span>使用</span></div>
     </div>
     <div class="flex justify-center items-center" style="margin-top:32px">
@@ -207,7 +268,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { LoadingOutlined } from '@ant-design/icons-vue';
+import { ref, onMounted, reactive, watch, h } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import mathEditor from "./matheditor.vue"
 const router = useRouter()
@@ -235,6 +297,40 @@ onMounted(() => {
     currentStep.value = Number(route.params.currentStep)
   }
 })
+watch(currentStep, (newValue, oldValue) => {
+  if(newValue == 2 || newValue == 3) {
+    document.querySelector('body')!.style.backgroundColor = '#F6F6F6'
+  }
+})
+const indicator = h(LoadingOutlined, {
+  style: {
+    fontSize: '24px',
+    marginRight: '12px',
+    color: '#ffffff'
+  },
+  spin: true,
+});
+let trainState = ref(false)
+let trainEnd = ref(false)
+const handleTrain = () => {
+  trainState.value = true
+  setTimeout(() => {
+    trainState.value = false
+    trainEnd.value = true
+    currentStep.value = 3
+  }, 30000);
+}
+const radioStyle = reactive({
+  display: 'block',
+  height: '30px',
+  lineHeight: '30px',
+});
+
+let showDLgType = ref(1)
+let epochsValue = ref(50)
+let rateValue = ref(0.01)
+let batchValue = ref(32)
+let optimizerValue = ref('RMSProp')
 </script>
 <style scoped>
 p {
@@ -319,4 +415,39 @@ p {
   font-size: 24px;
   color: #4844A3;
 }
+.font_help_title{
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 34px;
+  display: flex;
+  align-items: center;
+  color: #4844A3;
+}
+.font_tarin{
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 24px;
+  color: rgba(0, 0, 0, 0.7);
+}
+.font_tip_title{
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 34px;
+  color: #000000;
+}
+.font_help_p{
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 22px;
+}
+.help_cur{background-color: #ffffff;border: 1px solid #4844A3;border-radius: 4px;}
+.train_btn{background-color: #4844A3; color: #ffffff}
 </style>
