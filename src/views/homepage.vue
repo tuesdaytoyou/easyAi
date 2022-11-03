@@ -291,7 +291,6 @@ import { LoadingOutlined } from '@ant-design/icons-vue';
 import { ref, onMounted, reactive, watch, h } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import mathEditor from "./matheditor.vue"
-import type { TableColumnsType } from 'ant-design-vue';
 const router = useRouter()
 const route = useRoute()
 const currentStep = ref(0);

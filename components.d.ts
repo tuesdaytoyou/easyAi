@@ -4,13 +4,11 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
-    AInputNumber: typeof import('ant-design-vue/es')['InputNumber']
     ARadio: typeof import('ant-design-vue/es')['Radio']
     ARadioGroup: typeof import('ant-design-vue/es')['RadioGroup']
     ASpin: typeof import('ant-design-vue/es')['Spin']
     AStep: typeof import('ant-design-vue/es')['Step']
     ASteps: typeof import('ant-design-vue/es')['Steps']
-    ATable: typeof import('ant-design-vue/es')['Table']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
   }
 }
