@@ -11,8 +11,16 @@ import './plugins/mathlive.js'
 import './assets/css/index.css'
 import './assets/css/css.css'
 
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+
+const app = createApp(App)
+
+app.mount('#app')
+
 const APP = createApp(App)
 APP.use(router)
 APP.use(store)
 APP.use(Antd)
+APP.use(ElementPlus)
 APP.mount('#app')

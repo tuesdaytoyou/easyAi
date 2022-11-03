@@ -55,7 +55,8 @@
     </div>
     <div v-else>
       <div class="flex justify-center items-center flex-col" style="margin-top:107px" v-show="currentStep == 0">
-        <div class="font_tip_title" style="margin-left: -1100px;">开始一个新的项目</div>
+        <div class="font_tip_title" style="margin-left: -1170px;">创建数据集</div>
+        <div class="" style="margin-left: -940px;">你可以直接选择下面的数据集也可以创建你自己的数据集</div>
         <div class="flex justify-center items-center">
           <div class="data-box">
             <div class="flex justify-center items-center" style="height:220px">
@@ -163,14 +164,14 @@
             <div class="font_help_p inline-block">Epochs</div>
             <img class="inline-block ml-1 mb-1 cursor-pointer" :src="getImage('icon_help')" />
             <div class="my-4">
-              <a-input-number v-model:value="epochsValue" :min="1" :max="100" controls="true" />
+              <el-input-number style="width:90px" v-model="epochsValue" :min="1" :max="100" controls-position="right"/>
             </div>
           </div>
           <div class="border-b">
             <div class="font_help_p inline-block mt-2">Learning Rate</div>
             <img class="inline-block ml-1 mb-1 cursor-pointer" :src="getImage('icon_help')" />
             <div class="my-4">
-              <a-input-number v-model:value="rateValue" step="0.01" :min="0" :max="1" controls="true" />
+              <el-input-number style="width:90px" v-model="rateValue" step="0.01" :min="0" :max="1" controls-position="right"/>
             </div>
           </div>
           <div class="border-b">
@@ -209,13 +210,31 @@
             </div>
             <div class="cursor-pointer ml-4"><img :src="getImage('icon_plus_box')" /></div>
           </div>
-          <div class="flex justify-center items-center h-4/5">
-            <div class="flex items-center flex-col" v-if="!trainEnd">
+          <div class="flex">
+            <div class="flex items-center flex-col h-full w-full mt-32" v-if="!trainEnd && showDLgType == 1">
               <img :src="getImage('img_train')" />
               <div class="font_tarin">点击训练模型，查看更多数据</div>
             </div>
-            <div v-else>
+            <div v-if="trainEnd && showDLgType == 1">
               <iframe></iframe>
+            </div>
+            <div v-if="showDLgType == 3" style="width: 100%">
+              <el-table :data="tableData" style="width: 100%">
+                <el-table-column prop="ai_id" label="训练ID" width="150" />
+                <el-table-column prop="ai_model" label="AI Module" width="120" />
+                <el-table-column prop="ai_rate" label="learning rate" width="120" />
+                <el-table-column prop="ai_batch" label="batch size" width="120" />
+                <el-table-column prop="ai_optimizer" label="optimizer" width="120" />
+                <el-table-column prop="ai_loss" label="Train/loss" width="150" />
+                <el-table-column prop="ai_acc" label="Train/acc" width="150" />
+                <el-table-column prop="ai_time" label="Submission time" width="150" />
+                <el-table-column fixed="right" label="Operations" width="120">
+                  <template #default>
+                    <el-button link type="primary" size="small">导出</el-button>
+                    <el-button link type="primary" size="small">运行</el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
             </div>
           </div>
         </div>
@@ -227,10 +246,10 @@
       <img class="header-img" :src="getImage('icon_back')" @click="mainDlg = 'main'" />
       <div style="width:668px;margin-left:442px">
         <a-steps v-model:current="currentStep">
-          <a-step @click="currentStep = 0" title="创建数据集" />
-          <a-step @click="currentStep = 1" title="创建模型" />
-          <a-step @click="currentStep = 2" title="训练" />
-          <a-step @click="currentStep = 3" title="结果" />
+          <a-step title="创建数据集" />
+          <a-step title="创建模型" />
+          <a-step title="训练" />
+          <a-step title="结果" />
         </a-steps>
       </div>
       <div class="blue-btn cursor-pointer" style="position: absolute;right: 50px;" @click="mainDlg = 'main';currentStep = 1"><span>使用</span></div>
@@ -272,6 +291,7 @@ import { LoadingOutlined } from '@ant-design/icons-vue';
 import { ref, onMounted, reactive, watch, h } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import mathEditor from "./matheditor.vue"
+import type { TableColumnsType } from 'ant-design-vue';
 const router = useRouter()
 const route = useRoute()
 const currentStep = ref(0);
@@ -331,6 +351,71 @@ let epochsValue = ref(50)
 let rateValue = ref(0.01)
 let batchValue = ref(32)
 let optimizerValue = ref('RMSProp')
+
+const tableData = [
+  {
+    key: '1',
+    ai_id: '猫狗识别_log/run1',
+    ai_model: 'CNN',
+    ai_rate: '0.0001',
+    ai_batch: '64',
+    ai_optimizer: 'Adam',
+    ai_loss: '0.102432556426',
+    ai_acc: '0.9531545',
+    ai_time: '2022-11-02 16:00',
+  },
+  {
+    key: '2',
+    ai_id: '猫狗识别_log/run2',
+    ai_model: 'MLP',
+    ai_rate: '0.0001',
+    ai_batch: '64',
+    ai_optimizer: 'Adam',
+    ai_loss: '0.102432556426',
+    ai_acc: '0.9531545',
+    ai_time: '2022-11-02 16:00',
+  },
+]
+// let columns = [
+//   {
+//     title: '训练ID',
+//     dataIndex: 'ai_id',
+//   },
+//   {
+//     title: 'AI Module',
+//     dataIndex: 'ai_model',
+//   },
+//   {
+//     title: 'learning rate',
+//     dataIndex: 'ai_rate',
+//   },
+//   {
+//     title: 'batch size',
+//     dataIndex: 'ai_batch',
+//   },
+//   {
+//     title: 'optimizer',
+//     dataIndex: 'ai_optimizer'
+//   },
+//   {
+//     title: 'Train/loss',
+//     dataIndex: 'ai_loss',
+//   },
+//   {
+//     title: 'Train/acc',
+//     dataIndex: 'ai_acc',
+//   },
+//   {
+//     title: 'Submission time',
+//     dataIndex: 'ai_time',
+//   },
+//   {
+//     title: 'Action',
+//     key: 'operation',
+//     fixed: 'right',
+//     width: 100,
+//   },
+// ]
 </script>
 <style scoped>
 p {
