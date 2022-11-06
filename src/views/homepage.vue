@@ -210,13 +210,13 @@
             </div>
             <div class="cursor-pointer ml-4"><img :src="getImage('icon_plus_box')" /></div>
           </div>
-          <div class="flex">
+          <div class="flex h-3/4">
             <div class="flex items-center flex-col h-full w-full mt-32" v-if="!trainEnd && showDLgType == 1">
               <img :src="getImage('img_train')" />
               <div class="font_tarin">点击训练模型，查看更多数据</div>
             </div>
-            <div v-if="trainEnd && showDLgType == 1">
-              <iframe></iframe>
+            <div v-if="trainEnd && showDLgType == 1" style="width: 100%;height: 100%">
+              <iframe width="100%" height="100%" src="http://region-41.seetacloud.com:36728/#scalars"></iframe>
             </div>
             <div v-if="showDLgType == 3" style="width: 100%">
               <el-table :data="tableData" style="width: 100%">
