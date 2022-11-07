@@ -21,13 +21,13 @@ export default defineConfig({
     open: false, // 设置服务启动时是否自动打开浏览器
     hmr: true,
     // 代理
-    // proxy: {
-    //   '/api': {
-    //     target: 'http://API网关所在域名',
-    //     changeOrigin: true,
-    //     rewrite: (path) => path.replace(/^\/api/, '')
-    //   },
-    // }
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8888',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      },
+    }
   },
   build: {
     rollupOptions: {

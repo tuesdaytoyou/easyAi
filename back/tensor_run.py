@@ -1,7 +1,18 @@
 import datetime, os
+import sys
 
-print(os.path.abspath(__file__))
-print(os.path.dirname(__file__))
+
+epochsValue = sys.argv[1]
+rateValue = sys.argv[2]
+batchValue = sys.argv[3]
+optimizerValue = sys.argv[4]
+
+epochsValue = int(epochsValue)
+rateValue = float(rateValue)
+batchValue = int(batchValue)
+
+# print(os.path.abspath(__file__))
+# print(os.path.dirname(__file__))
 # plot cat photos from the dogs vs cats dataset
 base_dir = os.path.dirname(__file__) + '/data/cats_and_dogs_filtered'
 
@@ -50,9 +61,9 @@ for i, img_path in enumerate(next_cat_pix+next_dog_pix):
   sp.axis('Off') # Don't show axes (or gridlines)
 
   img = mpimg.imread(img_path)
-  plt.imshow(img)
+  # plt.imshow(img)
 
-plt.show()
+# plt.show()
 
 import tensorflow as tf
 
@@ -79,9 +90,37 @@ model = tf.keras.models.Sequential([
 
 model.summary()
 
-from tensorflow.keras.optimizers import RMSprop
-
-model.compile(optimizer=RMSprop(lr=0.001),
+from keras.optimizers import Adam
+from keras.optimizers import RMSprop
+from keras.optimizers import SGD
+from keras.optimizers import Adamax
+from keras.optimizers import Adagrad
+print('optimizer')
+print(optimizerValue)
+print(optimizerValue == 'RMSprop')
+if optimizerValue == 'Adam':
+  model.compile(optimizer=Adam(lr=rateValue),
+              loss='binary_crossentropy',
+              metrics = ['accuracy'])
+elif optimizerValue == 'RMSprop':
+  print('optimizer RMSprop')
+  model.compile(optimizer=RMSprop(lr=rateValue),
+              loss='binary_crossentropy',
+              metrics = ['accuracy'])
+elif optimizerValue == 'SGD':
+  model.compile(optimizer=SGD(lr=rateValue),
+              loss='binary_crossentropy',
+              metrics = ['accuracy'])
+elif optimizerValue == 'Adamax':
+  model.compile(optimizer=Adamax(lr=rateValue),
+              loss='binary_crossentropy',
+              metrics = ['accuracy'])
+elif optimizerValue == 'Adagrad':
+  model.compile(optimizer=Adagrad(lr=rateValue),
+              loss='binary_crossentropy',
+              metrics = ['accuracy'])
+else: 
+  model.compile(optimizer=RMSprop(lr=rateValue),
               loss='binary_crossentropy',
               metrics = ['accuracy'])
 
@@ -95,14 +134,14 @@ test_datagen  = ImageDataGenerator( rescale = 1.0/255. )
 # Flow training images in batches of 20 using train_datagen generator
 # --------------------
 train_generator = train_datagen.flow_from_directory(train_dir,
-                                                    batch_size=20,
+                                                    batch_size=batchValue,
                                                     class_mode='binary',
                                                     target_size=(150, 150))     
 # --------------------
 # Flow validation images in batches of 20 using test_datagen generator
 # --------------------
 validation_generator =  test_datagen.flow_from_directory(validation_dir,
-                                                         batch_size=20,
+                                                         batch_size=batchValue,
                                                          class_mode  = 'binary',
                                                          target_size = (150, 150))
 
@@ -112,7 +151,10 @@ tensorboard_callback = tf.keras.callbacks.TensorBoard(logdir, histogram_freq=1)
 history = model.fit(train_generator,
 					validation_data=validation_generator,
 					steps_per_epoch=100,
-					epochs=15,
+					epochs=epochsValue,
 					validation_steps=50,
 					verbose=2,
-                    callbacks=[tensorboard_callback])
+          callbacks=[tensorboard_callback])
+
+# os.system('tensorboard --logdir=./logs --port=6008')
+# tensorboard --logdir='logs' --port=6006

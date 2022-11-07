@@ -192,10 +192,10 @@
             <div>
               <a-radio-group v-model:value="optimizerValue">
                 <a-radio :style="radioStyle" value="Adam">Adam</a-radio>
-                <a-radio :style="radioStyle" value="RMSProp">RMSProp</a-radio>
+                <a-radio :style="radioStyle" value="RMSprop">RMSprop</a-radio>
                 <a-radio :style="radioStyle" value="SGD">SGD</a-radio>
                 <a-radio :style="radioStyle" value="Adamax">Adamax</a-radio>
-                <a-radio :style="radioStyle" value="AdamGrad">AdamGrad</a-radio>
+                <a-radio :style="radioStyle" value="Adagrad">Adagrad</a-radio>
               </a-radio-group>
             </div>
           </div>
@@ -216,7 +216,7 @@
               <div class="font_tarin">点击训练模型，查看更多数据</div>
             </div>
             <div v-if="trainEnd && showDLgType == 1" style="width: 100%;height: 100%">
-              <iframe width="100%" height="100%" src="http://region-41.seetacloud.com:36728/#scalars"></iframe>
+              <iframe id="myiframe" width="100%" height="100%" :src="curpreviewurl"></iframe>
             </div>
             <div v-if="showDLgType == 3" style="width: 100%">
               <el-table :data="tableData" style="width: 100%">
@@ -287,9 +287,11 @@
   </div>
 </template>
 <script setup lang="ts">
+import axios from 'axios'
 import { LoadingOutlined } from '@ant-design/icons-vue';
 import { ref, onMounted, reactive, watch, h } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import { ElMessage } from 'element-plus'
 import mathEditor from "./matheditor.vue"
 const router = useRouter()
 const route = useRoute()
@@ -331,13 +333,38 @@ const indicator = h(LoadingOutlined, {
 });
 let trainState = ref(false)
 let trainEnd = ref(false)
-const handleTrain = () => {
+let curpreviewurl = ref('http://localhost:6008/#scalars')
+const handleTrain = async () => {
+  if(trainState.value == true) {
+    ElMessage('上次训练还未完成，请稍后重试')
+    return
+  }
+  curpreviewurl.value = ''
   trainState.value = true
-  setTimeout(() => {
+  let res = await axios({
+    method: 'post',
+    url: '/update/tensorflow',
+    data: {
+      epochsValue: epochsValue.value,
+      rateValue: rateValue.value,
+      batchValue: batchValue.value,
+      optimizerValue: optimizerValue.value,
+    }
+  });
+  if(res.data.msg_code == 200) {
+    curpreviewurl.value = 'http://localhost:6008/#scalars'
     trainState.value = false
     trainEnd.value = true
     currentStep.value = 3
-  }, 30000);
+    // let myiframe:any = document.getElementById('myiframe')
+    // myiframe.contentWindow.location.reload(true)
+  }
+  // trainState.value = true
+  // setTimeout(() => {
+  //   trainState.value = false
+  //   trainEnd.value = true
+  //   currentStep.value = 3
+  // }, 30000);
 }
 const radioStyle = reactive({
   display: 'block',
@@ -346,10 +373,10 @@ const radioStyle = reactive({
 });
 
 let showDLgType = ref(1)
-let epochsValue = ref(50)
+let epochsValue = ref(15)
 let rateValue = ref(0.01)
-let batchValue = ref(32)
-let optimizerValue = ref('RMSProp')
+let batchValue = ref(16)
+let optimizerValue = ref('RMSprop')
 
 const tableData = [
   {
@@ -375,46 +402,6 @@ const tableData = [
     ai_time: '2022-11-02 16:00',
   },
 ]
-// let columns = [
-//   {
-//     title: '训练ID',
-//     dataIndex: 'ai_id',
-//   },
-//   {
-//     title: 'AI Module',
-//     dataIndex: 'ai_model',
-//   },
-//   {
-//     title: 'learning rate',
-//     dataIndex: 'ai_rate',
-//   },
-//   {
-//     title: 'batch size',
-//     dataIndex: 'ai_batch',
-//   },
-//   {
-//     title: 'optimizer',
-//     dataIndex: 'ai_optimizer'
-//   },
-//   {
-//     title: 'Train/loss',
-//     dataIndex: 'ai_loss',
-//   },
-//   {
-//     title: 'Train/acc',
-//     dataIndex: 'ai_acc',
-//   },
-//   {
-//     title: 'Submission time',
-//     dataIndex: 'ai_time',
-//   },
-//   {
-//     title: 'Action',
-//     key: 'operation',
-//     fixed: 'right',
-//     width: 100,
-//   },
-// ]
 </script>
 <style scoped>
 p {

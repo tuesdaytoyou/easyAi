@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 # encoding:utf-8
-import flask,json
+import flask,json,os
+import subprocess
+
 # 实例化api，把当前这个python文件当作一个服务，__name__代表当前这个python文件
 api = flask.Flask(__name__) 
 
@@ -57,6 +59,24 @@ def loginjosn():
       ren = {'msg':'用户名或密码错误','msg_code':-1}
   else:
     ren = {'msg':'用户名或密码为空','msg_code':1001}
+  return json.dumps(ren,ensure_ascii=False)
+
+#post入参访问方式二：josn格式参数  
+@api.route('/update/tensorflow',methods=['post'])
+def updateTensorflow():
+  #from-data格式参数
+  epochsValue = flask.request.json.get('epochsValue')
+  rateValue = flask.request.json.get('rateValue')
+  batchValue = flask.request.json.get('batchValue')
+  optimizerValue = flask.request.json.get('optimizerValue')
+  
+  if epochsValue and rateValue and batchValue and optimizerValue:
+    list = f'python tensor_run.py {epochsValue} {rateValue} {batchValue} {optimizerValue}'
+    print(list)
+    os.system(list)
+    subprocess.Popen('tensorboard --logdir=./logs --port=6008', shell=True)
+    # os.system('tensorboard --logdir=./logs --port=6008')
+    ren = {'msg':'训练成功','msg_code':200}
   return json.dumps(ren,ensure_ascii=False)
 
 if __name__ == '__main__':
