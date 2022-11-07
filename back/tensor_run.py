@@ -90,11 +90,11 @@ model = tf.keras.models.Sequential([
 
 model.summary()
 
-from keras.optimizers import Adam
-from keras.optimizers import RMSprop
-from keras.optimizers import SGD
-from keras.optimizers import Adamax
-from keras.optimizers import Adagrad
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.optimizers import RMSprop
+from tensorflow.keras.optimizers import SGD
+from tensorflow.keras.optimizers import Adamax
+from tensorflow.keras.optimizers import Adagrad
 print('optimizer')
 print(optimizerValue)
 print(optimizerValue == 'RMSprop')
