@@ -8,4 +8,4 @@ COPY . /code
 RUN pip install -r /code/requirements.txt
 # 指定cmd的工作目录 /code
 WORKDIR /code
-CMD ["python", "/tensor_api.py"]
+CMD ["python", "./tensor_api.py"]
