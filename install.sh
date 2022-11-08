@@ -3,7 +3,7 @@ nodejs --version
 # https://cloud.tencent.com/developer/article/1649008
 # https://repo.anaconda.com/archive/
 wget -P /tmp https://repo.anaconda.com/archive/Anaconda3-2022.10-Linux-x86_64.sh
-bash /tmp/Anaconda3-2020.02-Linux-x86_64.sh
+bash /tmp/Anaconda3-2022.10-Linux-x86_64.sh
 source ~/.bashrc
 # https://cloud.tencent.com/developer/article/1812624
 conda update --all
