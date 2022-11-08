@@ -7,7 +7,7 @@ ADD package.json yarn.lock /code/
 RUN yarn
 
 ADD . /code
-RUN npm run build
+RUN yarn run build
 
 # 选择更小体积的基础镜像
 FROM nginx:alpine

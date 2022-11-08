@@ -3,6 +3,6 @@ services:
   simple:
     build:
       context: .
-      dockerfile: router.Dockerfile
+      dockerfile: simple.Dockerfile
     ports:
       - 4000:80
