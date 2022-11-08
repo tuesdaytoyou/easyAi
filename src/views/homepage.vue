@@ -171,7 +171,7 @@
             <div class="font_help_p inline-block mt-2">Learning Rate</div>
             <img class="inline-block ml-1 mb-1 cursor-pointer" :src="getImage('icon_help')" />
             <div class="my-4">
-              <el-input-number style="width:90px" v-model="rateValue" step="0.01" :min="0" :max="1" controls-position="right"/>
+              <el-input-number style="width:90px" v-model="rateValue" :step="0.01" :min="0" :max="1" controls-position="right"/>
             </div>
           </div>
           <div class="border-b">
@@ -211,11 +211,11 @@
             <div class="cursor-pointer ml-4"><img :src="getImage('icon_plus_box')" /></div>
           </div>
           <div class="flex h-3/4">
-            <div class="flex items-center flex-col h-full w-full mt-32" v-if="!trainEnd && showDLgType == 1">
+            <div class="flex items-center flex-col h-full w-full mt-32" v-show="!trainEnd && showDLgType == 1">
               <img :src="getImage('img_train')" />
               <div class="font_tarin">点击训练模型，查看更多数据</div>
             </div>
-            <div v-if="trainEnd && showDLgType == 1" style="width: 100%;height: 100%">
+            <div v-show="trainEnd && showDLgType == 1" style="width: 100%;height: 100%">
               <iframe id="myiframe" width="100%" height="100%" :src="curpreviewurl"></iframe>
             </div>
             <div v-if="showDLgType == 3" style="width: 100%">
@@ -352,19 +352,13 @@ const handleTrain = async () => {
     }
   });
   if(res.data.msg_code == 200) {
-    curpreviewurl.value = 'http://localhost:6008/#scalars'
-    trainState.value = false
-    trainEnd.value = true
-    currentStep.value = 3
-    // let myiframe:any = document.getElementById('myiframe')
-    // myiframe.contentWindow.location.reload(true)
+    setTimeout(() => {
+      curpreviewurl.value = 'http://localhost:6008/#scalars'
+      trainState.value = false
+      trainEnd.value = true
+      currentStep.value = 3
+    }, 1000);
   }
-  // trainState.value = true
-  // setTimeout(() => {
-  //   trainState.value = false
-  //   trainEnd.value = true
-  //   currentStep.value = 3
-  // }, 30000);
 }
 const radioStyle = reactive({
   display: 'block',

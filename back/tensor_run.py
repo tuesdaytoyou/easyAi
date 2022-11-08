@@ -95,9 +95,7 @@ from tensorflow.keras.optimizers import RMSprop
 from tensorflow.keras.optimizers import SGD
 from tensorflow.keras.optimizers import Adamax
 from tensorflow.keras.optimizers import Adagrad
-print('optimizer')
-print(optimizerValue)
-print(optimizerValue == 'RMSprop')
+
 if optimizerValue == 'Adam':
   model.compile(optimizer=Adam(lr=rateValue),
               loss='binary_crossentropy',
