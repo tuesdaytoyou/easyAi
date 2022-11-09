@@ -1,5 +1,5 @@
 # 基于镜像基础
-FROM python:3.9-alpine
+FROM tensorflow/tensorflow
 # 创建代码文件夹工作目录 /code 
 RUN mkdir /code 
 # 复制当前代码文件到容器中 /code 
