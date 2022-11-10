@@ -74,12 +74,12 @@ def updateTensorflow():
     list = f'python tensor_run.py {epochsValue} {rateValue} {batchValue} {optimizerValue}'
     print(list)
     os.system(list)
-    subprocess.Popen('tensorboard --logdir=./logs --port=6008', shell=True)
+    subprocess.Popen('tensorboard --logdir=./logs --port=6008 --bind_all', shell=True)
     # os.system('tensorboard --logdir=./logs --port=6008')
     ren = {'msg':'训练成功','msg_code':200}
   return json.dumps(ren,ensure_ascii=False)
 
 if __name__ == '__main__':
-  api.run(port=8899,debug=True,host='127.0.0.1') # 启动服务
+  api.run(port=8899,debug=False,host='0.0.0.0') # 启动服务
   # debug=True,改了代码后，不用重启，它会自动重启
   # 'host='127.0.0.1'别IP访问地址

@@ -14,7 +14,8 @@ batchValue = int(batchValue)
 # print(os.path.abspath(__file__))
 # print(os.path.dirname(__file__))
 # plot cat photos from the dogs vs cats dataset
-base_dir = os.path.dirname(__file__) + '/data/cats_and_dogs_filtered'
+os.system('ls')
+base_dir = './data/cats_and_dogs_filtered'
 
 train_dir = os.path.join(base_dir, 'train')
 validation_dir = os.path.join(base_dir, 'validation')

@@ -292,7 +292,7 @@ import { LoadingOutlined } from '@ant-design/icons-vue';
 import { ref, onMounted, reactive, watch, h } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { ElMessage } from 'element-plus'
-import mathEditor from "./matheditor.vue"
+// import mathEditor from "./matheditor.vue"
 const router = useRouter()
 const route = useRoute()
 const currentStep = ref(0);
