@@ -1,8 +1,23 @@
 <template>
   <div v-show="mainDlg == 'main'">
     <div class="ai-header flex items-center">
-      <img class="header-img" :src="getImage('icon_mu')" />
-      <div class="header-title" v-if="typeSelectDlg">交互式机器学习模型</div>
+      <div class="relative">
+        <img class="header-img" :src="getImage('icon_mu')" @click="showmenu = !showmenu" />
+        <div v-show="showmenu" class="absolute bg-white left-12 z-10">
+          <ul class="menu_ul">
+            <li class="font_menu flex items-center justify-start w-44 m-2 p-2 pl-4"><img :src="getImage('icon_menu_1')" /><div class="ml-2">新建项目</div></li>
+            <li class="font_menu flex items-center justify-start w-44 m-2 p-2 pl-4"><img :src="getImage('icon_menu_2')" /><div class="ml-2">项目列表</div></li>
+            <li class="font_menu flex items-center justify-start w-44 m-2 p-2 pl-4"><img :src="getImage('icon_menu_3')" /><div class="ml-2">保存项目</div></li>
+            <li class="font_menu flex items-center justify-start w-44 m-2 p-2 pl-4"><img :src="getImage('icon_menu_4')" /><div class="ml-2">打开文件</div></li>
+            <li class="font_menu flex items-center justify-start w-44 m-2 p-2 pl-4"><img :src="getImage('icon_menu_5')" /><div class="ml-2">下载文件</div></li>
+            <li class="font_menu flex items-center justify-start w-44 m-2 p-2 pl-4"><img :src="getImage('icon_menu_6')" /><div class="ml-2">社区</div></li>
+            <li class="font_menu flex items-center justify-start w-44 m-2 p-2 pl-4"><img :src="getImage('icon_menu_7')" /><div class="ml-2">帮助中心</div></li>
+            <li class="font_menu flex items-center justify-start w-44 m-2 p-2 pl-4"><img :src="getImage('icon_menu_8')" /><div class="ml-2">个人中心</div></li>
+            <li class="font_menu flex items-center justify-start w-44 m-2 p-2 pl-4"><img :src="getImage('icon_menu_9')" /><div class="ml-2">反馈</div></li>
+          </ul>
+        </div>
+      </div>
+      <div class="header-title cursor-pointer" v-if="typeSelectDlg" @click="showmenu = !showmenu">Playable ML Module</div>
       <div style="width:668px;margin-left:442px" v-else>
         <a-steps v-model:current="currentStep">
           <a-step title="创建数据集" />
@@ -22,6 +37,7 @@
           <div>
             <p class="type-title">图像分类</p>
             <p class="type-p">分类识别是监督式机器学习最常见的使用场景。</p>
+            <p class="type-p" style="color:rgba(153, 153, 153, 0.8);font-size:14px;top: 391px;top:465px">20000人已学习</p>
             <div class="type-btn" @click="typeSelectDlg = false;currentStep=0">
               <span>开始学习</span>
             </div>
@@ -32,8 +48,9 @@
             <img class="type-image" :src="getImage('home-card2')" />
           </div>
           <div>
-            <p class="type-title">文本翻译</p>
-            <p class="type-p">文本翻译是最常见的机器学习应用方向，这里XXX。</p>
+            <p class="type-title">机器翻译</p>
+            <p class="type-p">机器翻译是人工智能的终极目标之一，其核心语言理解和语言生成是自然语言处理的两大基本问题。</p>
+            <p class="type-p" style="color:rgba(153, 153, 153, 0.8);font-size:14px;top: 391px;top:465px">15000人已学习</p>
             <div class="type-btn">
               <span>开始学习</span>
             </div>
@@ -44,8 +61,9 @@
             <img class="type-image" :src="getImage('home-card3')" />
           </div>
           <div>
-            <p class="type-title">预测</p>
-            <p class="type-p">分类识别是监督式机器学习最常见的使用场景。</p>
+            <p class="type-title">预测分析</p>
+            <p class="type-p">预测分析包括各种统计技术，用于分析当前和历史事实，对未来做出预测。</p>
+            <p class="type-p" style="color:rgba(153, 153, 153, 0.8);font-size:14px;top: 391px;top:465px">5000人已学习</p>
             <div class="type-btn">
               <span>开始学习</span>
             </div>
@@ -59,7 +77,7 @@
         <div class="" style="margin-left: -940px;">你可以直接选择下面的数据集也可以创建你自己的数据集</div>
         <div class="flex justify-center items-center">
           <div class="data-box">
-            <div class="flex justify-center items-center" style="height:220px">
+            <div class="flex justify-center items-center border-b-2" style="height:220px">
               <img class="data-image" :src="getImage('data_dog')" />
             </div>
             <div>
@@ -72,7 +90,7 @@
             </div>
           </div>
           <div class="data-box">
-            <div class="flex justify-center items-center" style="height:220px">
+            <div class="flex justify-center items-center border-b-2" style="height:220px">
               <img class="data-image" :src="getImage('data_number')" />
             </div>
             <div>
@@ -86,7 +104,9 @@
           </div>
           <div class="data-box">
             <div class="flex flex-col justify-center items-center h-full data-add">
-              <img class="data-image" :src="getImage('data_add')" />
+              <div class="w-24 h-24 flex justify-center items-center" style="background:rgba(72, 68, 163, 0.1);">
+                <img class="data-image" :src="getImage('data_add')" />
+              </div>
               <div>创建你自己的分类数据集</div>
             </div>
           </div>
@@ -301,6 +321,7 @@ let mainDlg = ref('main')
 let checked = ref(true)
 let doc_type = ref('cat')
 let modelScript = ref(false)
+let showmenu = ref(false)
 const getImage = (name: string): string => {
   return new URL(`../assets/images/home/${name}.png`, import.meta.url).href;
 };
@@ -313,16 +334,17 @@ const jumpTo = (route:string) => {
 }
 onMounted(() => {
   console.log(route)
+  document.querySelector('body')!.style.backgroundColor = '#F6F6F6'
   if(route.params.currentStep){
     typeSelectDlg.value = false
     currentStep.value = Number(route.params.currentStep)
   }
 })
-watch(currentStep, (newValue, oldValue) => {
-  if(newValue == 2 || newValue == 3) {
-    document.querySelector('body')!.style.backgroundColor = '#F6F6F6'
-  }
-})
+// watch(currentStep, (newValue, oldValue) => {
+//   if(newValue == 2 || newValue == 3) {
+//     document.querySelector('body')!.style.backgroundColor = '#F6F6F6'
+//   }
+// })
 const indicator = h(LoadingOutlined, {
   style: {
     fontSize: '24px',
@@ -412,8 +434,9 @@ p {
   font-family: 'PingFang SC';
   font-style: normal;
   font-weight: 400;
-  font-size: 40px;
+  font-size: 20px;
   line-height: 56px;
+  color: #4844A3;
 }
 
 .data-add {
@@ -513,6 +536,15 @@ p {
   font-size: 20px;
   line-height: 22px;
 }
+.font_menu{
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: rgba(0, 0, 0, 0.6);
+}
 .help_cur{background-color: #ffffff;border: 1px solid #4844A3;border-radius: 4px;}
 .train_btn{background-color: #4844A3; color: #ffffff}
+.menu_ul li:hover{background-color:rgba(72, 68, 163, 0.1); color: #4844A3;}
 </style>

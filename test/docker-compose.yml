@@ -1,8 +1,0 @@
-version: '3'
-services:
-  docker-python-demo:
-    build: .
-    ports:
-     - "8899:8899"
-     - "6008:6008"
-     - "3088:3088"
