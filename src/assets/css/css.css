@@ -185,14 +185,46 @@ img{border:0;} */
 .model-img img{
   height: 162px;
 }
-.model-title{
-  margin:0 40px;
-  width: 800px;
+.model-title {margin-left:20px;width:900px}
+.model-title .title{
   font-family: 'PingFang SC';
   font-style: normal;
   font-weight: 400;
   font-size: 32px;
   line-height: 45px;
+  margin-bottom:10px;
+}
+.model-title .type{
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #4844A3;
+}
+.model-title .type li{
+  padding:4px;
+  margin-right:10px;
+  background: rgba(72, 68, 163, 0.1);
+  border: 0.549296px solid rgba(72, 68, 163, 0.3);
+  border-radius: 2.19718px;
+}
+.model-title .des{
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #000000;
+  margin:10px 0;
+}
+.model-title .num{
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 40px;
+  color: rgba(153, 153, 153, 0.5);
 }
 .model-arrow{
   margin: 20px

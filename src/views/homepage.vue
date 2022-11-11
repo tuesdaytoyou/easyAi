@@ -114,59 +114,110 @@
       </div>
       <div v-show="currentStep == 1" style="margin: 0px 0 0 150px;">
         <div class="flex mt-8">
-          <div class="blue-btn cursor-pointer"><span>模型库</span></div>
-          <div class="gray-btn cursor-pointer" @click="jumpTo('matheditor')"><span>创建</span></div>
+          <div class="model-font cursor-pointer w-32 h-12 flex justify-center items-center" style="background: #F2F2F2;" :class="{cur:model_type == 'model'}" @click="model_type='model'"><span>模型库</span></div>
+          <div class="model-font cursor-pointer w-32 h-12 flex justify-center items-center" style="background: #F2F2F2;" :class="{cur:model_type == 'editor'}" @click="model_type='editor'"><span>自定义</span></div>
         </div>
-        <div class="font_tip_title flex my-6">
+        <div class="font_tip_title flex my-6" v-show="model_type == 'model'">
           以下机器学习模型为经典的分类模型，你可以尝试不同的模型，运行并查看效果
         </div>
-        <div>
+        <div class="font_tip_title flex my-6" v-show="model_type == 'editor'">
+          你可以自定义编辑更多分类模型，运行并查看效果
+        </div>
+        <div v-show="model_type == 'model'">
           <div class="model-list flex justify-center items-center">
             <div class="model-img flex justify-center items-center"><img :src="getImage('img_model1')" /></div>
             <div class="model-title">
-              <p>多层感知器</p>
-              <p>Multi-Layer Perception (MLP)</p>
+              <p class="title">Convolutional neural networks (CNN)卷积神经网络</p>
+              <ul class="type flex">
+                <li>图像识别</li>
+                <li>效果好，性能高</li>
+              </ul>
+              <p class="des">卷积神经网络（CNN）是一类强大的、为处理图像数据而设计的神经网络。</p>
+              <p class="num">2000人已使用</p>
             </div>
             <div class="blue-btn cursor-pointer" @click="currentStep = 2"><span>使用</span></div>
-            <div class="model-arrow cursor-pointer" @click="modelScript = !modelScript">
-              <img v-show="!modelScript" :src="getImage('model-arrow')" />
-              <img v-show="modelScript" :src="getImage('model-arrow-up')" />
+            <div class="model-arrow cursor-pointer" @click="modelScript2 = false;modelScript1 = !modelScript1">
+              <img v-show="!modelScript1" :src="getImage('model-arrow')" />
+              <img v-show="modelScript1" :src="getImage('model-arrow-up')" />
             </div>
           </div>
-          <div class="model-script" style="background: #FCFBF8;" v-show="modelScript">
+          <div class="model-script" v-if="modelScript1">
+            <div class="script-title">认识CNN</div>
+            <div class="script-p">
+              <p>卷积神经网络 (CNN)是一种用于处理图像的神经网络,这种类型的神经网络从图像中获取输入并从图像中提取特征,并提供可学习的参数以有效地进行分类、检测和更多任务。我们使用称为“过滤器”的东西从图像中提取特征,我们使用不同的过滤器从图像中提取不同的特征。</p>
+              <p>CNN 的关键在于认识到即使有数百万个与输入图像的像素相关的参数，也不一定有数百万个不同的参数。CNN 由所谓的过滤器的集合或“库”组成，这些过滤器是比原始图像小得多的矩形图像块。这些过滤器在对应于卷积数学运算的过程中与图像上的不同位置匹配，因此得名 CNN。</p>
+            </div>
+            <div class="script-title">卷积神经网络的原理</div>
+            <div class="script-p">
+              <p>让我们试一试：猫的耳朵</p>
+              <p>这是一个简单的小部件，您可以在其中通过将过滤器参数设置为 -1、0 或 +1 来调整它们。该小部件将自动将过滤器应用于左侧的猫图像。生成的激活值显示在右侧面板中。</p>
+              <p>继续尝试更改过滤器参数。从底部的选择器中选择一个值，然后单击中间面板过滤器中的像素。您可能首先会在输出面板中复制 cat 模式——如果您选择值 -1，则否定。当过滤器同时包含负值和正值时，更有趣的事情开始发生，因此同时包含 -1 和 +1。</p>
+              <p>这不是一个实际的练习，而是尝试调整过滤器，以便检测图像中的耳朵，或者换句话说，以便在输出图像中在猫的耳朵周围获得白点。</p>
+            </div>
+            <div class="script-img flex justify-center"><img :src="getImage('img_cnn')"/></div>
+            <div class="script-title">关于CNN更多学习入口</div>
+            <div class="script-link"><a>Crash Course in Convolutional Neural Networks for Machine Learning</a></div>
+            <div class="script-link"><a>Rash Course in Convolutional Neural Networks for Machine Learning</a></div>
+            <div class="script-title">模型公式</div>
+            <div class="script-p">你可以修改编辑模型；点击立即使用，可运行查看训练效果</div>
+            <div class=" block">
+              <mathEditor :isShowTitle="false" :isShowFoot="true" modelType="cnn"></mathEditor>
+            </div>
+          </div>
+          <div class="model-list flex justify-center items-center">
+            <div class="model-img flex justify-center items-center"><img :src="getImage('img_model2')" /></div>
+            <div class="model-title">
+              <p class="title">Multi-Layer Perception (MLP)多层感知器</p>
+              <ul class="type flex">
+                <li>图像识别</li>
+                <li>语音识别</li>
+                <li>机器翻译</li>
+              </ul>
+              <p class="des">MLP多层感知器是一种前向结构的ANN人工神经网络, 它能够处理非线性可分离的问题，值得深入研究。MLP算法应用范围较广，扩展性也强，可应用于语音识别、图像识别、机器翻译等领域。</p>
+              <p class="num">1000人已使用</p>
+            </div>
+            <div class="blue-btn"><span>使用</span></div>
+            <div class="model-arrow cursor-pointer" @click="modelScript1 = false;modelScript2 = !modelScript2">
+              <img v-show="!modelScript2" :src="getImage('model-arrow')" />
+              <img v-show="modelScript2" :src="getImage('model-arrow-up')" />
+            </div>
+          </div>
+          <div class="model-script" v-if="modelScript2">
             <div class="script-title">认识MLP</div>
-            <div class="script-p">MLP由三层组成——输入层、隐藏层和输出层。输入层仅接收输入，隐藏层处理输入，输出层生成结果。基本上，每一层都要训练权值。
-              使用MLP用于：Tabular data 列表数据，Image data 图像数据，Text data 文本数据。</div>
+            <div class="script-p">
+              <p>MLP由三层组成——输入层、隐藏层和输出层。输入层仅接收输入，隐藏层处理输入，输出层生成结果。基本上，每一层都要训练权值。</p>
+              <p>使用MLP用于：Tabular data 列表数据，Image data 图像数据，Text data 文本数据。</p>
+            </div>
             <div class="script-title">多层感知器的优势</div>
             <div class="script-p">多层感知器能够学习任意非线性函数。因此，这些网络被普遍称为通用函数逼近器。通用逼近背后的主要原因之一是激活函数(activation
               function)。激活函数将非线性特征引入网络中，有助于网络学习输入和输出之间的复杂关系。</div>
             <div class="script-img flex justify-center"><img :src="getImage('img_mlp')"/></div>
             <div class="script-title">关于MLP更多学习入口</div>
             <div class="script-link"><a>Crash Course in Convolutional Neural Networks for Machine Learning</a></div>
-            <div class="script-link"><a>Crash Course in Convolutional Neural Networks for Machine Learning</a></div>
-            <div class="script-title">模型编辑器</div>
+            <div class="script-link"><a>Rash Course in Convolutional Neural Networks for Machine Learning</a></div>
+            <div class="script-title">模型公式</div>
+            <div class="script-p">你可以修改编辑模型；点击立即使用，可运行查看训练效果</div>
             <div class=" block">
-              <mathEditor :isShowTitle="false" :isShowFoot="false"></mathEditor>
+              <mathEditor :isShowTitle="false" :isShowFoot="true" modelType="mlp"></mathEditor>
             </div>
-          </div>
-          <div class="model-list flex justify-center items-center">
-            <div class="model-img flex justify-center items-center"><img :src="getImage('img_model2')" /></div>
-            <div class="model-title">
-              <p>卷积神经网络</p>
-              <p>Convolutional neural networks (CNN)</p>
-            </div>
-            <div class="blue-btn"><span>使用</span></div>
-            <div class="model-arrow"><img :src="getImage('model-arrow')" /></div>
           </div>
           <div class="model-list flex justify-center items-center">
             <div class="model-img flex justify-center items-center"><img :src="getImage('img_model3')" /></div>
             <div class="model-title">
-              <p>多层感知器</p>
-              <p>Multi-Layer Perception (MLP)</p>
+              <p class="title">K-nearest neighbors (KNN) K最临近</p>
+              <ul class="type flex">
+                <li>分类</li>
+                <li>回归</li>
+              </ul>
+              <p class="des">K 最近邻（KNN）是一种非常简单、易于理解、用途广泛且最顶级的机器学习算法之一。KNN 用于金融、医疗保健、政治学、手写检测、图像识别和视频识别等各种应用。</p>
+              <p class="num">500人已使用</p>
             </div>
             <div class="blue-btn"><span>使用</span></div>
             <div class="model-arrow"><img :src="getImage('model-arrow')" /></div>
           </div>
+        </div>
+        <div v-show="model_type == 'editor'">
+          <mathEditor :isShowTitle="false" :isShowFoot="true" modelType="cnn"></mathEditor>
         </div>
       </div>
       <div class="flex justify-center" v-show="currentStep == 2 || currentStep == 3" style="margin:32px 100px">
@@ -182,21 +233,60 @@
           </div>
           <div class="border-b">
             <div class="font_help_p inline-block">Epochs</div>
-            <img class="inline-block ml-1 mb-1 cursor-pointer" :src="getImage('icon_help')" />
+            <el-tooltip
+              class="box-item"
+              effect="dark"
+              placement="top"
+            >
+              <template #content> 
+                <div style="width:400px">
+                  Epoch<br />
+                  一个epoch意味着训练数据集中的每个样本都至少通过一次训练模型，例如如果您的epoch设置为50，这意味着您的模型被训练50次。通常，数字越大，您的模型将更好地学习预测模型。<br />
+                  你可能想要调整（通常是增加）这个数字，知道您的模型获得良好的预测结果。<br />
+                </div>
+              </template>
+              <img class="inline-block ml-1 mb-1 cursor-pointer" :src="getImage('icon_help')" />
+            </el-tooltip>
             <div class="my-4">
               <el-input-number style="width:90px" v-model="epochsValue" :min="1" :max="100" controls-position="right"/>
             </div>
           </div>
           <div class="border-b">
             <div class="font_help_p inline-block mt-2">Learning Rate</div>
-            <img class="inline-block ml-1 mb-1 cursor-pointer" :src="getImage('icon_help')" />
+            <el-tooltip
+              class="box-item"
+              effect="dark"
+              placement="top"
+            >
+              <template #content>
+                <div style="width:400px">
+                  Optimizer<br />
+                  优化器就是在深度学习反向传播过程中，指引损失函数（目标函数）的各个参数往正确的方向更新合适的大小，使得更新后的各个参数让损失函数（目标函数）值不断逼近全局最小。<br />
+                  你可能想要更换不同优化器使您的模型获得良好的预测结果。<br />
+                </div>
+              </template>
+              <img class="inline-block ml-1 mb-1 cursor-pointer" :src="getImage('icon_help')" />
+            </el-tooltip>
             <div class="my-4">
               <el-input-number style="width:90px" v-model="rateValue" :step="0.01" :min="0" :max="1" controls-position="right"/>
             </div>
           </div>
           <div class="border-b">
             <div class="font_help_p inline-block mt-2">Batch Size</div>
-            <img class="inline-block ml-1 mb-1 cursor-pointer" :src="getImage('icon_help')" />
+            <el-tooltip
+              class="box-item"
+              effect="dark"
+              placement="top"
+            >
+              <template #content>
+                <div style="width:400px">
+                  Batch size<br />
+                  批次是在一次训练迭代中使用的一组样本。例如，假设您有80张图像，而且您选择16 batch size，这意味着数据将被分为80/16=5个批次。一旦所有5个批次都通过模型输入，恰好完成一个epoch。<br />
+                  您可能不需要调整这个数字来获得良好的训练结果。<br />
+                </div>
+              </template>
+              <img class="inline-block ml-1 mb-1 cursor-pointer" :src="getImage('icon_help')" />
+            </el-tooltip>
             <div>
               <a-radio-group v-model:value="batchValue">
                 <a-radio :style="radioStyle" :value="16">16</a-radio>
@@ -208,7 +298,20 @@
           </div>
           <div class="">
             <div class="font_help_p inline-block mt-2">Optimizer</div>
-            <img class="inline-block ml-1 mb-1 cursor-pointer" :src="getImage('icon_help')" />
+            <el-tooltip
+              class="box-item"
+              effect="dark"
+              placement="top"
+            >
+              <template #content>
+                <div style="width:400px">
+                  Optimizer<br />
+                  优化器就是在深度学习反向传播过程中，指引损失函数（目标函数）的各个参数往正确的方向更新合适的大小，使得更新后的各个参数让损失函数（目标函数）值不断逼近全局最小。<br />
+                  你可能想要更换不同优化器使您的模型获得良好的预测结果。<br />
+                </div>
+              </template>
+              <img class="inline-block ml-1 mb-1 cursor-pointer" :src="getImage('icon_help')" />
+            </el-tooltip>
             <div>
               <a-radio-group v-model:value="optimizerValue">
                 <a-radio :style="radioStyle" value="Adam">Adam</a-radio>
@@ -263,7 +366,8 @@
   </div>
   <div v-show="mainDlg == 'doc'" style="height: 100vh;">
     <div class="ai-header flex items-center" style="height: 104px;">
-      <img class="header-img" :src="getImage('icon_back')" @click="mainDlg = 'main'" />
+      <div class="gray-btn cursor-pointer header-img" @click="mainDlg = 'main'"><span>返回</span></div>
+      <!-- <img class="header-img" :src="getImage('icon_back')" @click="mainDlg = 'main'" /> -->
       <div style="width:668px;margin-left:442px">
         <a-steps v-model:current="currentStep">
           <a-step title="创建数据集" />
@@ -277,23 +381,31 @@
     <div class="flex justify-center items-center" style="margin-top:32px">
       <div class="doc_side">
         <div class="doc_data flex items-center relative">
-          <div class="absolute left-2" style="">数据集</div>
+          <div class="absolute left-6" style="">数据集</div>
           <img class="absolute right-2 cursor-pointer" :src="getImage('icon_add_file')" />
         </div>
         <ul class="doc_type">
           <li class="flex items-center relative h-12 cursor-pointer" :class="{cur:doc_type == 'cat'}" @click="doc_type = 'cat'">
-            <p class="absolute left-2" style="color: #121212;">Cat</p>
+            <p class="absolute left-10" style="color: #121212;">猫类数据集</p>
             <p class="absolute right-2" style="color: #979797;">500</p>
           </li>
           <li class="flex items-center relative h-12 cursor-pointer" :class="{cur:doc_type == 'dog'}" @click="doc_type = 'dog'">
-            <p class="absolute left-2" style="color: #121212;">Dog</p>
+            <p class="absolute left-10" style="color: #121212;">狗类数据集</p>
             <p class="absolute right-2" style="color: #979797;">500</p>
           </li>
         </ul>
       </div>
       <div class="doc_main px-14 py-7">
         <div class="doc_upload h-12 flex items-center">
-          <img class="mx-4 my-3 cursor-pointer" :src="getImage('icon_upload')" />
+          <el-upload
+            v-model:file-list="fileList"
+            class="upload-demo"
+            action=""
+            multiple
+          >
+            <img class="mx-4 my-3 cursor-pointer" :src="getImage('icon_upload')" />
+          </el-upload>
+          <!-- <img class="mx-4 my-3 cursor-pointer" :src="getImage('icon_upload')" /> -->
         </div>
         <div class="doc_imgs flex items-center flex-wrap">
           <div class="relative" v-for="item in 20">
@@ -312,7 +424,7 @@ import { LoadingOutlined } from '@ant-design/icons-vue';
 import { ref, onMounted, reactive, watch, h } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { ElMessage } from 'element-plus'
-// import mathEditor from "./matheditor.vue"
+import mathEditor from "./matheditor.vue"
 const router = useRouter()
 const route = useRoute()
 const currentStep = ref(0);
@@ -320,13 +432,18 @@ let typeSelectDlg = ref(true)
 let mainDlg = ref('main')
 let checked = ref(true)
 let doc_type = ref('cat')
-let modelScript = ref(false)
+let model_type = ref('model')
+let modelScript1 = ref(false)
+let modelScript2 = ref(false)
 let showmenu = ref(false)
 const getImage = (name: string): string => {
   return new URL(`../assets/images/home/${name}.png`, import.meta.url).href;
 };
+// const getImageDataset = (name: string): string => {
+//   return new URL(`../assets/images/home/${doc_type.value}/${name}.jpg`, import.meta.url).href;
+// };
 const getImageDataset = (name: string): string => {
-  return new URL(`../assets/images/home/${doc_type.value}/${name}.jpg`, import.meta.url).href;
+  return new URL(`../../back/data/cats_and_dogs_filtered/train/${doc_type.value}s/${doc_type.value}.${name}.jpg`, import.meta.url).href;
 };
 
 const jumpTo = (route:string) => {
@@ -472,29 +589,30 @@ p {
 }
 
 .doc_data {
-  height: 48px;
-  font-family: 'Proxima Nova';
+  font-family: 'PingFang SC';
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  color: #8A8A8A;
+  color: #333333;
+  height: 48px;
 }
 
 .doc_type {
-  font-family: 'Proxima Nova';
+  font-family: 'PingFang SC';
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
+  color: #121212;
 }
 
 .doc_type .cur {
-  background: #FEEDEF;
+  background: #EDECF6;
 }
 
 .doc_type .cur p:first-child {
-  color: #F60457 !important;
+  color: #4844A3!important;
 }
 .font-p{
   font-family: 'PingFang SC';
@@ -547,4 +665,12 @@ p {
 .help_cur{background-color: #ffffff;border: 1px solid #4844A3;border-radius: 4px;}
 .train_btn{background-color: #4844A3; color: #ffffff}
 .menu_ul li:hover{background-color:rgba(72, 68, 163, 0.1); color: #4844A3;}
+.model-font{
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 29.179px;
+  line-height: 32px;
+}
+.model-font.cur{background: #FFFFFF;border: 1.45895px solid #4844A3;color: #4844A3;border-radius: 5px;}
 </style>

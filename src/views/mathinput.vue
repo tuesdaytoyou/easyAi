@@ -1,5 +1,5 @@
 <template>
-  <div style="display:inline-block;margin:4px">
+  <div :id="'box_'+fieldId" style="display:inline-block;margin:4px">
     <div :id="fieldId" style="min-width:32px;min-height:32px;" :style="borderStyle"></div>
     <div
       class="toolbar"
@@ -27,7 +27,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from "vue";
+import { ref, defineProps, onMounted, watch } from "vue";
+const props = defineProps({
+  defaulevalue: {
+    type: String,
+    default: ""
+  },
+})
 let isFoucs = ref(false);
 let fieldId = "field-" + new Date().getTime();
 let mathField: any;
@@ -66,6 +72,9 @@ let initMathQuill = function() {
       }
     }
   });
+  if(props.defaulevalue){
+    mathField.write(props.defaulevalue);
+  }
 };
 onMounted(initMathQuill);
 // watch(isFoucs, (newVal: boolean, oldVal: boolean) => {
@@ -77,12 +86,16 @@ let toolArrowLeft = ref("0px");
 let toolPrimaryLeft = ref("0px");
 let toolSecondaryLeft = ref("0px")
 const setBoxStyle = () => {
+  let base = 50
+  let mathBoxDom:any = document.getElementById('box_'+fieldId);
+  console.log(mathBoxDom)
+  console.log(mathBoxDom.offsetLeft)
   toolbarTop.value =
-    mathFieldDom!.offsetTop + mathFieldDom!.offsetHeight + "px";
-  toolbarLeft.value = mathFieldDom!.offsetLeft + "px";
-  toolArrowLeft.value = mathFieldDom!.offsetWidth / 2 + "px";
-  toolPrimaryLeft.value = mathFieldDom!.offsetWidth / 2 - 70 + "px";
-  toolSecondaryLeft.value = mathFieldDom!.offsetWidth / 2 - 250 + "px";
+    mathBoxDom!.offsetTop + mathBoxDom!.offsetHeight + "px";
+  toolbarLeft.value = mathBoxDom!.offsetLeft + "px";
+  toolArrowLeft.value = mathBoxDom!.offsetWidth / 2 + "px";
+  toolPrimaryLeft.value = mathBoxDom!.offsetWidth / 2 - 70 + "px";
+  toolSecondaryLeft.value = mathBoxDom!.offsetWidth / 2 - 250 + "px";
 };
 
 let showToolbar = ref(false);

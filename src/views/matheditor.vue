@@ -26,9 +26,9 @@
             <div class="editor-module flex items-center relative">
               <div class="module-title">Module</div>
               <div class="module-input">
-                <mathInput></mathInput>(
-                <mathInput></mathInput>;
-                <mathInput></mathInput>)
+                <mathInput :defaulevalue="moduleVal1"></mathInput>(
+                <mathInput :defaulevalue="moduleVal2"></mathInput>;
+                <mathInput :defaulevalue="moduleVal3"></mathInput>)
               </div>
               <div class="plus" expanded="false">
                 <img class="plus-img" :src="getImage('icon_plus')" />
@@ -53,9 +53,9 @@
                     <img class="absolute max-w-none -left-8 -top-11 z-10" :src="getImage('icon_delete_tip')" />
                     <img class="max-w-none cursor-pointer" @click="handleDeleteArrow(index)" :src="getImage('icon_delete_row')" />
                   </div>
-                  <mathInput></mathInput>
+                  <mathInput :defaulevalue="state.value1"></mathInput>
                   <img class="w-8 mx-2 inline-block" :src="getImage('statement-arrow')" />
-                  <mathInput></mathInput>
+                  <mathInput :defaulevalue="state.value2"></mathInput>
                 </div>
                 <div class="plus relative" expanded="false">
                   <img class="plus-img" :src="getImage('icon_plus')" />
@@ -80,28 +80,49 @@
                     <img class="max-w-none cursor-pointer" @click="handleDeleteArrow(index)" :src="getImage('icon_delete_row')" />
                   </div>
                   <div class="array-left">
-                    <mathInput></mathInput>
+                    <mathInput :defaulevalue="state.leftValue"></mathInput>
                   </div>
                   <div class="array-mid">
                     <img :src="getImage('statement-arrow')" />
                   </div>
                   <div class="array-right">
                     <div class="inline-block">
-                      <li v-for="(arr, arrindex) in state.array" :key="arr.id">
-                        <mathInput></mathInput>
-                        <div class="array-plus cursor-pointer" @click="handleArrayPlus(state, arrindex)">
-                          <img :src="getImage('icon_plus')" />
+                      <table>
+                        <tr v-for="(arr, arrindex) in state.array" :key="arr.id">
+                          <td>
+                            <mathInput :defaulevalue="arr.value1"></mathInput>
+                            <div class="array-plus cursor-pointer" @click="handleArrayPlus(state, arrindex)">
+                              <img :src="getImage('icon_plus')" />
+                            </div>
+                            <div class="array-delete cursor-pointer" @click="handleArraydelete(state, arrindex)">
+                              <img :src="getImage('icon_delete_row')" />
+                            </div>
+                          </td>
+                          <td>
+                            <mathInput :defaulevalue="arr.value2"></mathInput>
+                          </td>
+                        </tr>
+                      </table>
+                      <!-- <li class="felx" v-for="(arr, arrindex) in state.array" :key="arr.id">
+                        <div>
+                          <mathInput :defaulevalue="arr.value1"></mathInput>
+                          <div class="array-plus cursor-pointer" @click="handleArrayPlus(state, arrindex)">
+                            <img :src="getImage('icon_plus')" />
+                          </div>
+                          <div class="array-delete cursor-pointer" @click="handleArraydelete(state, arrindex)">
+                            <img :src="getImage('icon_delete_row')" />
+                          </div>
                         </div>
-                        <div class="array-delete cursor-pointer" @click="handleArraydelete(state, arrindex)">
-                          <img :src="getImage('icon_delete_row')" />
+                        <div>
+                          <mathInput :defaulevalue="arr.value2"></mathInput>
                         </div>
-                      </li>
+                      </li> -->
                     </div>
-                    <div class="inline-block">
+                    <!-- <div class="inline-block">
                       <li v-for="(arr, arrindex) in state.array" :key="arr.id">
-                        <mathInput></mathInput>
+                        <mathInput :defaulevalue="arr.value2"></mathInput>
                       </li>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
                 <div class="plus relative" expanded="false">
@@ -124,7 +145,7 @@
             <div class="editor-return flex items-center">
               <div class="return-title">Return</div>
               <div class="return-input">
-                <mathInput></mathInput>
+                <mathInput :defaulevalue="returnVal"></mathInput>
               </div>
             </div>
           </div>
@@ -140,11 +161,11 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, defineProps } from "vue";
+import { ref, defineProps, onMounted } from "vue";
 import mathInput from "./mathinput.vue";
 import { useRouter } from "vue-router";
 const router = useRouter()
-defineProps({
+const props = defineProps({
   isShowTitle: {
     type: Boolean,
     default: true
@@ -153,13 +174,17 @@ defineProps({
     type: Boolean,
     default: true
   },
+  modelType: {
+    type: String,
+    default: ""
+  },
 })
 const getImage = (name: string): string => {
   return new URL(`../assets/images/home/${name}.png`, import.meta.url).href;
 };
 let statementList = ref([
-  { type: 1, array: [{id:1}] },
-  { type: 2, array: [{id:1},{id:2}] }
+  { type: 1, array: [{id:1}], value1:"", value2:""},
+  { type: 2, array: [{id:1,value1:"",value2:""},{id:2,value1:"",value2:""}], leftValue: "" }
 ]);
 let arrayid = 2
 const handleArrayPlus = (state:any, arrindex:number) => {
@@ -171,9 +196,9 @@ const handleArraydelete = (state:any, arrindex:number) => {
 }
 const handlePlus = (type:number,index:number) => {
   if(type == 1){
-    statementList.value.splice(index,0,{ type: 1, array: [{id:1}] })
+    statementList.value.splice(index,0,{ type: 1, array: [{id:1}], value1:"", value2:"" })
   }else{
-    statementList.value.splice(index,0,{ type: 2, array: [{id:1},{id:2}] })
+    statementList.value.splice(index,0,{ type: 2, array: [{id:1,value1:"",value2:""},{id:2,value1:"",value2:""}], leftValue: "" })
   }
 }
 const handlePlusArea = (e:any, type:string) => {
@@ -190,6 +215,29 @@ const jumpTo = (route:string,type:number) => {
   router.push({name: route,params:{currentStep:type}})
 }
 let showDLgType = ref(1)
+let moduleVal1 = ref("")
+let moduleVal2 = ref("")
+let moduleVal3 = ref("")
+let returnVal = ref("")
+if(props.modelType == "mlp"){
+  moduleVal1.value = "MLP"
+  moduleVal2.value = "x"
+  moduleVal3.value = "W,b"
+  returnVal.value = "h_{\\left[L\\right]}"
+  statementList.value = [
+    { type: 1, array: [{id:1}],value1:"L",value2:"\\left|W\\right|" },
+    { type: 2, array: [{id:1,value1:"x",value2:"i=0"},{id:2,value1:"ReLU\\left(W_{\\left[i-1\\right]}\\cdot h_{\\left[i-1\\right]}+b_{\\left[i-1\\right]}\\right)",value2:"i<L"}, {id:3,value1:"W_{\\left[i-1\\right]}\\cdot h_{\\left[i-1\\right]}+b_{\\left[i-1\\right]}",value2:"otherwise"}],leftValue: "h_\\left[0\\le i\\le L\\right]" }
+  ]
+}else if(props.modelType == "cnn") {
+  moduleVal1.value = "ConBlock"
+  moduleVal2.value = "x"
+  moduleVal3.value = "Conv2d0,Conv2d1"
+  returnVal.value = ""
+  statementList.value = [
+    { type: 1, array: [{id:1}],value1:"",value2:"" },
+    { type: 2, array: [{id:1,value1:"",value2:""},{id:2,value1:"",value2:""}], leftValue: "" }
+  ]
+}
 </script>
 <style scoped>
 p {
@@ -275,7 +323,7 @@ p {
 }
 .array-input {
   padding: 16px 0;
-  margin: 0 50px 0 20px;
+  margin: 0 0 0 20px;
 }
 .array-mid {
   display: inline-block;
