@@ -129,8 +129,13 @@
   background: transparent;
 }
 .mq-math-mode .mq-text-mode {
+  color: #495BFF;
   font-size: 87%;
 }
+/* .mq-math-mode .mq-text-mode:hover {
+  color: black;
+  font-size: 87%;
+} */
 .mq-math-mode .mq-font {
   font: 1em "Times New Roman", Symbola, serif;
 }

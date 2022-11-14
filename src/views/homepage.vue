@@ -5,7 +5,7 @@
         <img class="header-img" :src="getImage('icon_mu')" @click="showmenu = !showmenu" />
         <div v-show="showmenu" class="absolute bg-white left-12 z-10">
           <ul class="menu_ul">
-            <li class="font_menu flex items-center justify-start w-44 m-2 p-2 pl-4"><img :src="getImage('icon_menu_1')" /><div class="ml-2">新建项目</div></li>
+            <li class="font_menu flex items-center justify-start w-44 m-2 p-2 pl-4" @click="typeSelectDlg=true;showmenu=false;"><img :src="getImage('icon_menu_1')" /><div class="ml-2">新建项目</div></li>
             <li class="font_menu flex items-center justify-start w-44 m-2 p-2 pl-4"><img :src="getImage('icon_menu_2')" /><div class="ml-2">项目列表</div></li>
             <li class="font_menu flex items-center justify-start w-44 m-2 p-2 pl-4"><img :src="getImage('icon_menu_3')" /><div class="ml-2">保存项目</div></li>
             <li class="font_menu flex items-center justify-start w-44 m-2 p-2 pl-4"><img :src="getImage('icon_menu_4')" /><div class="ml-2">打开文件</div></li>
@@ -176,7 +176,7 @@
               <p class="des">MLP多层感知器是一种前向结构的ANN人工神经网络, 它能够处理非线性可分离的问题，值得深入研究。MLP算法应用范围较广，扩展性也强，可应用于语音识别、图像识别、机器翻译等领域。</p>
               <p class="num">1000人已使用</p>
             </div>
-            <div class="blue-btn"><span>使用</span></div>
+            <div class="blue-btn cursor-pointer" @click="currentStep = 2"><span>使用</span></div>
             <div class="model-arrow cursor-pointer" @click="modelScript1 = false;modelScript2 = !modelScript2">
               <img v-show="!modelScript2" :src="getImage('model-arrow')" />
               <img v-show="modelScript2" :src="getImage('model-arrow-up')" />
@@ -217,7 +217,7 @@
           </div>
         </div>
         <div v-show="model_type == 'editor'">
-          <mathEditor :isShowTitle="false" :isShowFoot="true" modelType="cnn"></mathEditor>
+          <mathEditor :isShowTitle="false" :isShowFoot="true"></mathEditor>
         </div>
       </div>
       <div class="flex justify-center" v-show="currentStep == 2 || currentStep == 3" style="margin:32px 100px">
@@ -343,13 +343,15 @@
             </div>
             <div v-if="showDLgType == 3" style="width: 100%">
               <el-table :data="tableData" style="width: 100%">
-                <el-table-column prop="ai_id" label="训练ID" width="150" />
+                <el-table-column fixed="left" prop="ai_id" label="训练ID" width="150" />
                 <el-table-column prop="ai_model" label="AI Module" width="120" />
-                <el-table-column prop="ai_rate" label="learning rate" width="120" />
-                <el-table-column prop="ai_batch" label="batch size" width="120" />
-                <el-table-column prop="ai_optimizer" label="optimizer" width="120" />
+                <el-table-column prop="ai_activation" label="Activation" width="120" />
+                <el-table-column prop="ai_rate" label="Learning rate" width="120" />
+                <el-table-column prop="ai_batch" label="Batch size" width="120" />
+                <el-table-column prop="ai_optimizer" label="Optimizer" width="120" />
                 <el-table-column prop="ai_loss" label="Train/loss" width="150" />
                 <el-table-column prop="ai_acc" label="Train/acc" width="150" />
+                <el-table-column prop="ai_tarintime" label="Time" width="150" />
                 <el-table-column prop="ai_time" label="Submission time" width="150" />
                 <el-table-column fixed="right" label="Operations" width="120">
                   <template #default>
@@ -516,22 +518,26 @@ const tableData = [
     key: '1',
     ai_id: '猫狗识别_log/run1',
     ai_model: 'CNN',
+    ai_activation: 'ReLU',
     ai_rate: '0.0001',
     ai_batch: '64',
     ai_optimizer: 'Adam',
     ai_loss: '0.102432556426',
     ai_acc: '0.9531545',
+    ai_tarintime: '00:03:48',
     ai_time: '2022-11-02 16:00',
   },
   {
     key: '2',
     ai_id: '猫狗识别_log/run2',
     ai_model: 'MLP',
+    ai_activation: 'ReLU',
     ai_rate: '0.0001',
     ai_batch: '64',
     ai_optimizer: 'Adam',
     ai_loss: '0.102432556426',
     ai_acc: '0.9531545',
+    ai_tarintime: '00:04:18',
     ai_time: '2022-11-02 16:00',
   },
 ]
