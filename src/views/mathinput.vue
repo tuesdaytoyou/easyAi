@@ -77,6 +77,14 @@ let initMathQuill = function() {
   }
 };
 onMounted(initMathQuill);
+watch(
+    () => props.defaulevalue,
+    (newProps) => {
+      console.log(newProps)
+      mathField.latex('')
+      mathField.write(newProps)
+    }
+);
 // watch(isFoucs, (newVal: boolean, oldVal: boolean) => {
 //   console.log(newVal)
 // })

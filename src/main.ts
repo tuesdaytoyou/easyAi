@@ -19,6 +19,8 @@ axios.defaults.baseURL = '/api'
 
 const app = createApp(App)
 
+app.config.warnHandler = () => null
+
 app.mount('#app')
 
 const APP = createApp(App)

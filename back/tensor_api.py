@@ -72,11 +72,19 @@ def updateTensorflow():
   print('test')
   if epochsValue and rateValue and batchValue and optimizerValue:
     list = f'python tensor_run.py {epochsValue} {rateValue} {batchValue} {optimizerValue}'
-    print(list)
-    os.system(list)
+    # res = os.system(list)
+    # print(res)
+    r = os.popen(list) #执行该命令
+    info = r.readlines()  #读取命令行的输出到一个list
+    print(info)
+    for line in info:  #按行遍历
+        line = line.strip('\r\n')
+        print(line)
+    accuracy = info[-2].strip('\r\n')
+    loss = info[-1].strip('\r\n')
     subprocess.Popen('tensorboard --logdir=./logs --port=6008 --bind_all', shell=True)
     # os.system('tensorboard --logdir=./logs --port=6008')
-    ren = {'msg':'训练成功','msg_code':200}
+    ren = {'msg':'训练成功','msg_code':200, 'data':{'accuracy':accuracy, 'loss':loss}}
   return json.dumps(ren,ensure_ascii=False)
 
 if __name__ == '__main__':

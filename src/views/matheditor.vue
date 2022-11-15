@@ -46,6 +46,111 @@
         </div>
         <template v-else>
           <div class="flex justify-center items-center py-10" v-for="(math,mathindex) in mathList">
+            <div class="mask" v-if="modelType == 'cnn' || modelType == 'mlp'"></div>
+            <div class="mlp_hover" v-if="modelType == 'mlp'">
+              <div class="box" style="left: 50px;">
+                <div class="container">
+                  <div class="list" @click="changeMlp('Relu')"><p>Relu</p><img class="help" :src="getImage('icon_help')" /></div>
+                  <div class="tipbox">
+                    <div class="gap" style="top:12px;left:-45px"></div>
+                    <img :src="getImage('img_tipbox1')" />
+                    <div class="btn"><a target="_blank" href="https://www.jiqizhixin.com/articles/2021-02-24-7">查看更多</a></div>
+                  </div>
+                </div>
+                <div class="container">
+                  <div class="list" @click="changeMlp('Softmax')"><p>Softmax</p><img class="help" :src="getImage('icon_help')" /></div>
+                  <div class="tipbox">
+                    <div class="gap" style="top:55px;left:-45px"></div>
+                    <img :src="getImage('img_tipbox2')" />
+                    <div class="btn"><a target="_blank" href="https://www.jiqizhixin.com/articles/2021-02-24-7">查看更多</a></div>
+                  </div>
+                </div>
+                <div class="container">
+                  <div class="list" @click="changeMlp('Sigmoid')"><p>Sigmoid</p><img class="help" :src="getImage('icon_help')" /></div>
+                </div>
+                <div class="container">
+                  <div class="list" @click="changeMlp('Tanh')"><p>Tanh</p><img class="help" :src="getImage('icon_help')" /></div>
+                </div>
+              </div>
+            </div>
+            <div class="cnn_hover1" v-if="modelType == 'cnn'">
+              <div class="box" style="left: 50px;">
+                <div class="container">
+                  <div class="list" @click="changeCnn1('Relu')"><p>Relu</p><img class="help" :src="getImage('icon_help')" /></div>
+                  <div class="tipbox">
+                    <div class="gap" style="top:12px;left:-45px"></div>
+                    <img :src="getImage('img_tipbox1')" />
+                    <div class="btn"><a target="_blank" href="https://www.jiqizhixin.com/articles/2021-02-24-7">查看更多</a></div>
+                  </div>
+                </div>
+                <div class="container">
+                  <div class="list" @click="changeCnn1('Softmax')"><p>Softmax</p><img class="help" :src="getImage('icon_help')" /></div>
+                  <div class="tipbox">
+                    <div class="gap" style="top:55px;left:-45px"></div>
+                    <img :src="getImage('img_tipbox2')" />
+                    <div class="btn"><a target="_blank" href="https://www.jiqizhixin.com/articles/2021-02-24-7">查看更多</a></div>
+                  </div>
+                </div>
+                <div class="container">
+                  <div class="list" @click="changeCnn1('Sigmoid')"><p>Sigmoid</p><img class="help" :src="getImage('icon_help')" /></div>
+                </div>
+                <div class="container">
+                  <div class="list" @click="changeCnn1('Tanh')"><p>Tanh</p><img class="help" :src="getImage('icon_help')" /></div>
+                </div>
+              </div>
+            </div>
+            <div class="cnn_hover2" v-if="modelType == 'cnn'">
+              <div class="box" style="left: 50px;">
+                <div class="container">
+                  <div class="list" @click="changeCnn2('Relu')"><p>Relu</p><img class="help" :src="getImage('icon_help')" /></div>
+                  <div class="tipbox">
+                    <div class="gap" style="top:12px;left:-45px"></div>
+                    <img :src="getImage('img_tipbox1')" />
+                    <div class="btn"><a target="_blank" href="https://www.jiqizhixin.com/articles/2021-02-24-7">查看更多</a></div>
+                  </div>
+                </div>
+                <div class="container">
+                  <div class="list" @click="changeCnn2('Softmax')"><p>Softmax</p><img class="help" :src="getImage('icon_help')" /></div>
+                  <div class="tipbox">
+                    <div class="gap" style="top:55px;left:-45px"></div>
+                    <img :src="getImage('img_tipbox2')" />
+                    <div class="btn"><a target="_blank" href="https://www.jiqizhixin.com/articles/2021-02-24-7">查看更多</a></div>
+                  </div>
+                </div>
+                <div class="container">
+                  <div class="list" @click="changeCnn2('Sigmoid')"><p>Sigmoid</p><img class="help" :src="getImage('icon_help')" /></div>
+                </div>
+                <div class="container">
+                  <div class="list" @click="changeCnn2('Tanh')"><p>Tanh</p><img class="help" :src="getImage('icon_help')" /></div>
+                </div>
+              </div>
+            </div>
+            <div class="cnn_hover3" v-if="modelType == 'cnn'">
+              <div class="box" style="left: 50px;">
+                <div class="container">
+                  <div class="list" @click="changeCnn3('Relu')"><p>Relu</p><img class="help" :src="getImage('icon_help')" /></div>
+                  <div class="tipbox">
+                    <div class="gap" style="top:12px;left:-45px"></div>
+                    <img :src="getImage('img_tipbox1')" />
+                    <div class="btn"><a target="_blank" href="https://www.jiqizhixin.com/articles/2021-02-24-7">查看更多</a></div>
+                  </div>
+                </div>
+                <div class="container">
+                  <div class="list" @click="changeCnn3('Softmax')"><p>Softmax</p><img class="help" :src="getImage('icon_help')" /></div>
+                  <div class="tipbox">
+                    <div class="gap" style="top:55px;left:-45px"></div>
+                    <img :src="getImage('img_tipbox2')" />
+                    <div class="btn"><a target="_blank" href="https://www.jiqizhixin.com/articles/2021-02-24-7">查看更多</a></div>
+                  </div>
+                </div>
+                <div class="container">
+                  <div class="list" @click="changeCnn3('Sigmoid')"><p>Sigmoid</p><img class="help" :src="getImage('icon_help')" /></div>
+                </div>
+                <div class="container">
+                  <div class="list" @click="changeCnn3('Tanh')"><p>Tanh</p><img class="help" :src="getImage('icon_help')" /></div>
+                </div>
+              </div>
+            </div>
             <div class="editor-box">
               <div class="editor-module flex items-center relative">
                 <div class="module-title">Module</div>
@@ -168,7 +273,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, defineProps, onMounted } from "vue";
+import { ref, defineProps, onMounted, defineEmits } from "vue";
 import mathInput from "./mathinput.vue";
 import { useRouter } from "vue-router";
 import { fa, tr } from "element-plus/es/locale";
@@ -187,6 +292,7 @@ const props = defineProps({
     default: ""
   },
 })
+const emits = defineEmits(['changeActivation'])
 const getImage = (name: string): string => {
   return new URL(`../assets/images/home/${name}.png`, import.meta.url).href;
 };
@@ -249,7 +355,7 @@ if(props.modelType == "mlp"){
     returnVal: "h_{\\left[L\\right]}",
     statementList: [
       { type: 1, id:stateid++,value1:"L",value2:"\\left|W\\right|" },
-      { type: 2, id:stateid++, array: [{id:1,value1:"x",value2:"i=0"},{id:2,value1:"\\text{ReLU}\\left(W_{\\left[i-1\\right]}\\cdot h_{\\left[i-1\\right]}+b_{\\left[i-1\\right]}\\right)",value2:"i<L"}, {id:3,value1:"W_{\\left[i-1\\right]}\\cdot h_{\\left[i-1\\right]}+b_{\\left[i-1\\right]}",value2:"otherwise"}],leftValue: "h_\\left[0\\le i\\le L\\right]" }
+      { type: 2, id:stateid++, array: [{id:1,value1:"x",value2:"i=0"},{id:2,value1:"\\text{Relu}\\left(W_{\\left[i-1\\right]}\\cdot h_{\\left[i-1\\right]}+b_{\\left[i-1\\right]}\\right)",value2:"i<L"}, {id:3,value1:"W_{\\left[i-1\\right]}\\cdot h_{\\left[i-1\\right]}+b_{\\left[i-1\\right]}",value2:"otherwise"}],leftValue: "h_\\left[0\\le i\\le L\\right]" }
     ]
   }]
 }else if(props.modelType == "cnn") {
@@ -258,7 +364,7 @@ if(props.modelType == "mlp"){
       moduleVal1: "ConBlock",
       moduleVal2: "x",
       moduleVal3: "Conv2d_0,Conv2d_1",
-      returnVal: "\\text{ReLU}(Conv2d_0,(\\text{ReLU}(Conv2d_0(x))))",
+      returnVal: "\\text{Relu}(Conv2d_0,(\\text{Relu}(Conv2d_0(x))))",
       statementList: []
     },
     {
@@ -273,6 +379,27 @@ if(props.modelType == "mlp"){
       ]
     }
   ]
+}
+const changeMlp = (value:string) => {
+  emits("changeActivation",value)
+  let str = `\\text{${value}}\\left(W_{\\left[i-1\\right]}\\cdot h_{\\left[i-1\\right]}+b_{\\left[i-1\\right]}\\right)`
+  mathList.value[0].statementList[1].array![1].value1 = str
+}
+let cnnvalue1 = 'Relu'
+let cnnvalue2 = 'Relu'
+const changeCnn1 = (value:string) => {
+  cnnvalue1 = value
+  let str = `\\text{${value}}(Conv2d_0,(\\text{${cnnvalue2}}(Conv2d_0(x))))`
+  mathList.value[0].returnVal = str
+}
+const changeCnn2 = (value:string) => {
+  cnnvalue2 = value
+  let str = `\\text{${cnnvalue1}}(Conv2d_0,(\\text{${value}}(Conv2d_0(x))))`
+  mathList.value[0].returnVal = str
+}
+const changeCnn3 = (value:string) => {
+  let str = `\\text{${value}}(h_c)`
+  mathList.value[1].statementList[1].value2 = str
 }
 </script>
 <style scoped>
@@ -454,4 +581,84 @@ p {
     /* 50%  {top:40px;width:20px;height:20px;border-radius: 20px;background: #5566FF;} */
     100% {top:60px;width:30px;height:30px;border-radius: 30px;background: #5566FF;}
 }
+.mask{width: 100%;height: 100%;position: absolute;z-index: 10;}
+.box {
+  z-index: 20;
+  top:0px;
+  left: 0px;
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  z-index:1000;
+  justify-content: center;
+  align-items: center;
+  display: none;
+  flex-direction: column;
+  position:absolute;
+  color:black;
+  width:127px;
+  height:188px;
+  background-color:white;
+  border: 0.5px solid #DCDCDC;
+  box-shadow: 0px 3px 14px 2px rgba(0, 0, 0, 0.05), 0px 8px 10px 1px rgba(0, 0, 0, 0.06), 0px 5px 5px -3px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+}
+.box .container {
+  width:112px;
+  height:40px;
+  padding:12px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.box .container .gap {
+  position: absolute;
+  width:112px;
+  height:40px;
+}
+.box .container .list{
+  justify-content: left;
+  align-items: center;
+  display: flex;
+}
+.box .container:hover{
+  color: #4844A3;
+  background: #ECF2FE;
+}
+.box .container:hover .tipbox{
+  display: block;
+}
+.box .container .list .help{
+  position: absolute;
+  right: 12px;
+}
+.box .container .tipbox{
+  display: none;
+  top: 0px;
+  left: 136px;
+  position: absolute;
+  width: 600px;
+  padding: 32px;
+  background-color: white;
+  border-radius: 3px;
+}
+.box .container .tipbox .btn{
+  margin-top: 16px;
+  width: 530px;
+  height: 32px;
+  border: 1px solid #DCDCDC;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cnn_hover1{height: 25px;width: 60px;position: absolute;top: 232px;left: 427px;z-index: 20;}
+.cnn_hover1:hover .box {display: flex;}
+.cnn_hover2{height: 25px;width: 60px;position: absolute;top: 232px;left: 617px;z-index: 20;}
+.cnn_hover2:hover .box {display: flex;}
+.cnn_hover3{height: 25px;width: 60px;position: absolute;top: 558px;left: 383px;z-index: 20;}
+.cnn_hover3:hover .box {display: flex;}
+.mlp_hover{height: 25px;width: 60px;position: absolute;top: 367px;left: 484px;z-index: 20;}
+.mlp_hover:hover .box {display: flex;}
 </style>

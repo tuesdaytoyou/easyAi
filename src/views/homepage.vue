@@ -19,12 +19,12 @@
       </div>
       <div class="header-title cursor-pointer" v-if="typeSelectDlg" @click="showmenu = !showmenu">Playable ML Module</div>
       <div style="width:668px;margin-left:442px" v-else>
-        <a-steps v-model:current="currentStep">
-          <a-step title="创建数据集" />
-          <a-step title="创建模型" />
-          <a-step title="训练" />
-          <a-step title="结果" />
-        </a-steps>
+        <el-steps :space="200" :active="currentStep">
+          <el-step title="创建数据集" />
+          <el-step title="创建模型" />
+          <el-step title="训练" />
+          <el-step title="结果" />
+        </el-steps>
       </div>
     </div>
     <div class="flex justify-center items-center flex-col" style="margin-top:107px" v-if="typeSelectDlg">
@@ -135,7 +135,7 @@
               <p class="des">卷积神经网络（CNN）是一类强大的、为处理图像数据而设计的神经网络。</p>
               <p class="num">2000人已使用</p>
             </div>
-            <div class="blue-btn cursor-pointer" @click="currentStep = 2"><span>使用</span></div>
+            <div class="blue-btn cursor-pointer" @click="currentStep = 2;modelTarinType='cnn'"><span>使用</span></div>
             <div class="model-arrow cursor-pointer" @click="modelScript2 = false;modelScript1 = !modelScript1">
               <img v-show="!modelScript1" :src="getImage('model-arrow')" />
               <img v-show="modelScript1" :src="getImage('model-arrow-up')" />
@@ -176,7 +176,7 @@
               <p class="des">MLP多层感知器是一种前向结构的ANN人工神经网络, 它能够处理非线性可分离的问题，值得深入研究。MLP算法应用范围较广，扩展性也强，可应用于语音识别、图像识别、机器翻译等领域。</p>
               <p class="num">1000人已使用</p>
             </div>
-            <div class="blue-btn cursor-pointer" @click="currentStep = 2"><span>使用</span></div>
+            <div class="blue-btn cursor-pointer" @click="currentStep = 2;modelTarinType='mlp'"><span>使用</span></div>
             <div class="model-arrow cursor-pointer" @click="modelScript1 = false;modelScript2 = !modelScript2">
               <img v-show="!modelScript2" :src="getImage('model-arrow')" />
               <img v-show="modelScript2" :src="getImage('model-arrow-up')" />
@@ -198,7 +198,7 @@
             <div class="script-title">模型公式</div>
             <div class="script-p">你可以修改编辑模型；点击立即使用，可运行查看训练效果</div>
             <div class=" block">
-              <mathEditor :isShowTitle="false" :isShowFoot="true" modelType="mlp"></mathEditor>
+              <mathEditor :isShowTitle="false" :isShowFoot="true" modelType="mlp" @changeActivation="changeActivation"></mathEditor>
             </div>
           </div>
           <div class="model-list flex justify-center items-center">
@@ -227,6 +227,9 @@
                :class="{train_btn:trainState}" @click="handleTrain()">
             <div v-if="trainState"><a-spin :indicator="indicator" />训练中</div>
             <div v-else>训练模型</div>
+          </div>
+          <div class="demo-progress" v-show="trainState || trainEnd">
+            <el-progress :percentage="percentage"/>
           </div>
           <div class="font_help_title my-4">
             超参数调节
@@ -338,7 +341,8 @@
               <img :src="getImage('img_train')" />
               <div class="font_tarin">点击训练模型，查看更多数据</div>
             </div>
-            <div v-show="trainEnd && showDLgType == 1" style="width: 100%;height: 100%">
+            <div class="iframebox" v-show="trainEnd && showDLgType == 1">
+              <div class="box"><a target="_blank" :href="curpreviewurl">点击进入详情</a></div>
               <iframe id="myiframe" width="100%" height="100%" :src="curpreviewurl"></iframe>
             </div>
             <div v-if="showDLgType == 3" style="width: 100%">
@@ -371,12 +375,12 @@
       <div class="gray-btn cursor-pointer header-img" @click="mainDlg = 'main'"><span>返回</span></div>
       <!-- <img class="header-img" :src="getImage('icon_back')" @click="mainDlg = 'main'" /> -->
       <div style="width:668px;margin-left:442px">
-        <a-steps v-model:current="currentStep">
-          <a-step title="创建数据集" />
-          <a-step title="创建模型" />
-          <a-step title="训练" />
-          <a-step title="结果" />
-        </a-steps>
+        <el-steps :space="200" :active="currentStep">
+          <el-step title="创建数据集" />
+          <el-step title="创建模型" />
+          <el-step title="训练" />
+          <el-step title="结果" />
+        </el-steps>
       </div>
       <div class="blue-btn cursor-pointer" style="position: absolute;right: 50px;" @click="mainDlg = 'main';currentStep = 1"><span>使用</span></div>
     </div>
@@ -459,11 +463,6 @@ onMounted(() => {
     currentStep.value = Number(route.params.currentStep)
   }
 })
-// watch(currentStep, (newValue, oldValue) => {
-//   if(newValue == 2 || newValue == 3) {
-//     document.querySelector('body')!.style.backgroundColor = '#F6F6F6'
-//   }
-// })
 const indicator = h(LoadingOutlined, {
   style: {
     fontSize: '24px',
@@ -475,13 +474,36 @@ const indicator = h(LoadingOutlined, {
 let trainState = ref(false)
 let trainEnd = ref(false)
 let curpreviewurl = ref('http://localhost:6008/#scalars')
+let percentage = ref(0)
+let fileList = []
+let timeInterval:any = null
+let tablekey = 1
+let modelTarinType = 'cnn'
+let modelTarinActivation = 'Relu'
+const changeActivation = (value:string) => {
+  modelTarinActivation = value
+}
+let tableData:any = ref([])
 const handleTrain = async () => {
   if(trainState.value == true) {
     ElMessage('上次训练还未完成，请稍后重试')
     return
   }
+  percentage.value = 0
+  if(timeInterval){clearInterval(timeInterval)}
   curpreviewurl.value = ''
   trainState.value = true
+  trainEnd.value = false
+  let startTime:any = new Date()
+  const step = Number(Number(50/Number(epochsValue.value)/22).toFixed(2))
+  console.log(currentStep)
+  timeInterval = setInterval(() => {
+    let temp = Number((percentage.value+step).toFixed(2))
+    percentage.value = temp
+    if (percentage.value > 100) {
+      percentage.value = 100
+    }
+  }, 500)
   let res = await axios({
     method: 'post',
     url: '/update/tensorflow',
@@ -492,13 +514,37 @@ const handleTrain = async () => {
       optimizerValue: optimizerValue.value,
     }
   });
+  let endTime:any = new Date()
+  let time = endTime-startTime
+  const h = time/1000/60/60
+  const m = time/1000/60 - h*60
+  const s = time/1000 - h*60*60 - m*60
+  let hf = h > 9 ? h.toFixed(0) : '0'+h.toFixed(0)
+  let mf = m > 9 ? m.toFixed(0) : '0'+m.toFixed(0)
+  let sf = s > 9 ? s.toFixed(0) : '0'+s.toFixed(0)
   if(res.data.msg_code == 200) {
+    let item = {
+      key: tablekey,
+      ai_id: '猫狗识别_log/run' + tablekey,
+      ai_model: modelTarinType,
+      ai_activation: modelTarinActivation,
+      ai_rate: rateValue.value,
+      ai_batch: batchValue.value,
+      ai_optimizer: optimizerValue.value,
+      ai_loss: res.data.data.loss,
+      ai_acc: res.data.data.accuracy,
+      ai_tarintime: `${hf}:${mf}:${sf}`,
+      ai_time: formatDateTime(endTime,'yyyy-MM-dd hh:mm')
+    }
+    tableData.value.push(item)
+    tablekey++
     setTimeout(() => {
       curpreviewurl.value = 'http://localhost:6008/#scalars'
       trainState.value = false
       trainEnd.value = true
       currentStep.value = 3
-    }, 1000);
+      percentage.value = 100
+    }, 2000);
   }
 }
 const radioStyle = reactive({
@@ -512,35 +558,26 @@ let epochsValue = ref(15)
 let rateValue = ref(0.01)
 let batchValue = ref(16)
 let optimizerValue = ref('RMSprop')
-
-const tableData = [
-  {
-    key: '1',
-    ai_id: '猫狗识别_log/run1',
-    ai_model: 'CNN',
-    ai_activation: 'ReLU',
-    ai_rate: '0.0001',
-    ai_batch: '64',
-    ai_optimizer: 'Adam',
-    ai_loss: '0.102432556426',
-    ai_acc: '0.9531545',
-    ai_tarintime: '00:03:48',
-    ai_time: '2022-11-02 16:00',
-  },
-  {
-    key: '2',
-    ai_id: '猫狗识别_log/run2',
-    ai_model: 'MLP',
-    ai_activation: 'ReLU',
-    ai_rate: '0.0001',
-    ai_batch: '64',
-    ai_optimizer: 'Adam',
-    ai_loss: '0.102432556426',
-    ai_acc: '0.9531545',
-    ai_tarintime: '00:04:18',
-    ai_time: '2022-11-02 16:00',
-  },
-]
+const formatDateTime = function (date:any, fmt = 'yyyy-MM-dd hh:mm:ss') {
+    var o:any = {
+        'M+': date.getMonth() + 1, // 月份
+        'd+': date.getDate(), // 日
+        'h+': date.getHours(), // 小时
+        'm+': date.getMinutes(), // 分
+        's+': date.getSeconds(), // 秒
+        'S': date.getMilliseconds() // 毫秒
+    };
+    if (/(y+)/.test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
+    }
+    for (var k in o) {
+        if (new RegExp('(' + k + ')').test(fmt)) {
+            let str = o[k] + '';
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? str : ('00' + str).substr(str.length));
+        }
+    }
+    return fmt;
+};
 </script>
 <style scoped>
 p {
@@ -679,4 +716,13 @@ p {
   line-height: 32px;
 }
 .model-font.cur{background: #FFFFFF;border: 1.45895px solid #4844A3;color: #4844A3;border-radius: 5px;}
+.iframebox{width: 100%;height: 100%}
+.iframebox .box{width: 59%;height: 54%;z-index: 10;display: flex;justify-content: center;align-items: center;position: absolute;font-size: 20px;color: #5d20c0;}
+.iframebox .box a:hover{color: #5d20c0;}
+.iframebox .box a{color: #5d20c0;display: none;}
+.iframebox .box:hover{background-color: rgba(68, 67, 78, 0.5);}
+.iframebox .box:hover a{display: block;}
+.demo-progress .el-progress--line {
+  width: 290px;
+}
 </style>

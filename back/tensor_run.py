@@ -98,28 +98,28 @@ from tensorflow.keras.optimizers import Adamax
 from tensorflow.keras.optimizers import Adagrad
 
 if optimizerValue == 'Adam':
-  model.compile(optimizer=Adam(lr=rateValue),
+  model.compile(optimizer=Adam(learning_rate=rateValue),
               loss='binary_crossentropy',
               metrics = ['accuracy'])
 elif optimizerValue == 'RMSprop':
   print('optimizer RMSprop')
-  model.compile(optimizer=RMSprop(lr=rateValue),
+  model.compile(optimizer=RMSprop(learning_rate=rateValue),
               loss='binary_crossentropy',
               metrics = ['accuracy'])
 elif optimizerValue == 'SGD':
-  model.compile(optimizer=SGD(lr=rateValue),
+  model.compile(optimizer=SGD(learning_rate=rateValue),
               loss='binary_crossentropy',
               metrics = ['accuracy'])
 elif optimizerValue == 'Adamax':
-  model.compile(optimizer=Adamax(lr=rateValue),
+  model.compile(optimizer=Adamax(learning_rate=rateValue),
               loss='binary_crossentropy',
               metrics = ['accuracy'])
 elif optimizerValue == 'Adagrad':
-  model.compile(optimizer=Adagrad(lr=rateValue),
+  model.compile(optimizer=Adagrad(learning_rate=rateValue),
               loss='binary_crossentropy',
               metrics = ['accuracy'])
 else: 
-  model.compile(optimizer=RMSprop(lr=rateValue),
+  model.compile(optimizer=RMSprop(learning_rate=rateValue),
               loss='binary_crossentropy',
               metrics = ['accuracy'])
 
@@ -154,6 +154,9 @@ history = model.fit(train_generator,
 					validation_steps=50,
 					verbose=2,
           callbacks=[tensorboard_callback])
-
+print(history.params)
+print(history.history.keys())
+print(history.history['accuracy'][-1])
+print(history.history['loss'][-1])
 # os.system('tensorboard --logdir=./logs --port=6008')
 # tensorboard --logdir='logs' --port=6006
