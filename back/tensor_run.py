@@ -156,7 +156,7 @@ history = model.fit(train_generator,
           callbacks=[tensorboard_callback])
 print(history.params)
 print(history.history.keys())
-print(history.history['accuracy'][-1])
-print(history.history['loss'][-1])
+print(history.history['val_accuracy'][-1])
+print(history.history['val_loss'][-1])
 # os.system('tensorboard --logdir=./logs --port=6008')
 # tensorboard --logdir='logs' --port=6006

@@ -161,7 +161,7 @@
             <div class="script-title">模型公式</div>
             <div class="script-p">你可以修改编辑模型；点击立即使用，可运行查看训练效果</div>
             <div class=" block">
-              <mathEditor :isShowTitle="false" :isShowFoot="true" modelType="cnn"></mathEditor>
+              <mathEditor :isShowTitle="false" :isShowFoot="true" modelType="cnn" @changeActivation="changeActivation" @changeCurrentStep="changeCurrentStep"></mathEditor>
             </div>
           </div>
           <div class="model-list flex justify-center items-center">
@@ -198,7 +198,7 @@
             <div class="script-title">模型公式</div>
             <div class="script-p">你可以修改编辑模型；点击立即使用，可运行查看训练效果</div>
             <div class=" block">
-              <mathEditor :isShowTitle="false" :isShowFoot="true" modelType="mlp" @changeActivation="changeActivation"></mathEditor>
+              <mathEditor :isShowTitle="false" :isShowFoot="true" modelType="mlp" @changeActivation="changeActivation" @changeCurrentStep="changeCurrentStep"></mathEditor>
             </div>
           </div>
           <div class="model-list flex justify-center items-center">
@@ -217,7 +217,7 @@
           </div>
         </div>
         <div v-show="model_type == 'editor'">
-          <mathEditor :isShowTitle="false" :isShowFoot="true"></mathEditor>
+          <mathEditor :isShowTitle="false" :isShowFoot="true" @changeCurrentStep="changeCurrentStep"></mathEditor>
         </div>
       </div>
       <div class="flex justify-center" v-show="currentStep == 2 || currentStep == 3" style="margin:32px 100px">
@@ -350,11 +350,12 @@
                 <el-table-column fixed="left" prop="ai_id" label="训练ID" width="150" />
                 <el-table-column prop="ai_model" label="AI Module" width="120" />
                 <el-table-column prop="ai_activation" label="Activation" width="120" />
+                <el-table-column prop="ai_epochs" label="Epochs" width="120" />
                 <el-table-column prop="ai_rate" label="Learning rate" width="120" />
                 <el-table-column prop="ai_batch" label="Batch size" width="120" />
                 <el-table-column prop="ai_optimizer" label="Optimizer" width="120" />
-                <el-table-column prop="ai_loss" label="Train/loss" width="150" />
-                <el-table-column prop="ai_acc" label="Train/acc" width="150" />
+                <el-table-column prop="ai_loss" label="Train/loss" width="160" />
+                <el-table-column prop="ai_acc" label="Train/acc" width="160" />
                 <el-table-column prop="ai_tarintime" label="Time" width="150" />
                 <el-table-column prop="ai_time" label="Submission time" width="150" />
                 <el-table-column fixed="right" label="Operations" width="120">
@@ -473,15 +474,18 @@ const indicator = h(LoadingOutlined, {
 });
 let trainState = ref(false)
 let trainEnd = ref(false)
-let curpreviewurl = ref('http://localhost:6008/#scalars')
+let curpreviewurl = ref('http://127.0.0.1:6008/#scalars')
 let percentage = ref(0)
-let fileList = []
+let fileList:any = []
 let timeInterval:any = null
 let tablekey = 1
-let modelTarinType = 'cnn'
-let modelTarinActivation = 'Relu'
+let modelTarinType = ref('cnn')
+let modelTarinActivation = ref('Relu')
 const changeActivation = (value:string) => {
-  modelTarinActivation = value
+  modelTarinActivation.value = value
+}
+const changeCurrentStep = (value:number) => {
+  currentStep.value = value
 }
 let tableData:any = ref([])
 const handleTrain = async () => {
@@ -515,31 +519,25 @@ const handleTrain = async () => {
     }
   });
   let endTime:any = new Date()
-  let time = endTime-startTime
-  const h = time/1000/60/60
-  const m = time/1000/60 - h*60
-  const s = time/1000 - h*60*60 - m*60
-  let hf = h > 9 ? h.toFixed(0) : '0'+h.toFixed(0)
-  let mf = m > 9 ? m.toFixed(0) : '0'+m.toFixed(0)
-  let sf = s > 9 ? s.toFixed(0) : '0'+s.toFixed(0)
   if(res.data.msg_code == 200) {
     let item = {
       key: tablekey,
       ai_id: '猫狗识别_log/run' + tablekey,
-      ai_model: modelTarinType,
-      ai_activation: modelTarinActivation,
+      ai_model: modelTarinType.value,
+      ai_activation: modelTarinActivation.value,
+      ai_epochs: epochsValue.value,
       ai_rate: rateValue.value,
       ai_batch: batchValue.value,
       ai_optimizer: optimizerValue.value,
       ai_loss: res.data.data.loss,
       ai_acc: res.data.data.accuracy,
-      ai_tarintime: `${hf}:${mf}:${sf}`,
+      ai_tarintime: setBackLogTime(endTime-startTime),
       ai_time: formatDateTime(endTime,'yyyy-MM-dd hh:mm')
     }
     tableData.value.push(item)
     tablekey++
     setTimeout(() => {
-      curpreviewurl.value = 'http://localhost:6008/#scalars'
+      curpreviewurl.value = 'http://127.0.0.1:6008/#scalars'
       trainState.value = false
       trainEnd.value = true
       currentStep.value = 3
@@ -558,6 +556,21 @@ let epochsValue = ref(15)
 let rateValue = ref(0.01)
 let batchValue = ref(16)
 let optimizerValue = ref('RMSprop')
+const setDateTimePrefix = (dateTime: number): string => {
+    return dateTime < 10 ? `0${dateTime}` : `${dateTime}`;
+}
+const setBackLogTime = (mss: any) => {
+    // if (!us) return '00:00:00';
+    // // 微秒 转为  毫秒
+    // const mss = Math.floor(us / 1000);
+    if (!mss) return '00:00:00';
+    const days = Math.floor(mss / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((mss % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((mss % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((mss % (1000 * 60)) / 1000);
+    const res = setDateTimePrefix(hours) + ':' + setDateTimePrefix(minutes) + ':' + setDateTimePrefix(seconds);
+    return days ? days + 'day ' + res : res;
+}
 const formatDateTime = function (date:any, fmt = 'yyyy-MM-dd hh:mm:ss') {
     var o:any = {
         'M+': date.getMonth() + 1, // 月份
@@ -717,7 +730,7 @@ p {
 }
 .model-font.cur{background: #FFFFFF;border: 1.45895px solid #4844A3;color: #4844A3;border-radius: 5px;}
 .iframebox{width: 100%;height: 100%}
-.iframebox .box{width: 59%;height: 54%;z-index: 10;display: flex;justify-content: center;align-items: center;position: absolute;font-size: 20px;color: #5d20c0;}
+.iframebox .box{width: 59%;height: 59%;z-index: 10;display: flex;justify-content: center;align-items: center;position: absolute;font-size: 20px;color: #5d20c0;}
 .iframebox .box a:hover{color: #5d20c0;}
 .iframebox .box a{color: #5d20c0;display: none;}
 .iframebox .box:hover{background-color: rgba(68, 67, 78, 0.5);}

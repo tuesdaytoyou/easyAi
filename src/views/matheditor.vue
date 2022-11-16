@@ -58,7 +58,7 @@
                   </div>
                 </div>
                 <div class="container">
-                  <div class="list" @click="changeMlp('Softmax')"><p>Softmax</p><img class="help" :src="getImage('icon_help')" /></div>
+                  <div class="list" @click="changeMlp('Sigmoid')"><p>Sigmoid</p><img class="help" :src="getImage('icon_help')" /></div>
                   <div class="tipbox">
                     <div class="gap" style="top:55px;left:-45px"></div>
                     <img :src="getImage('img_tipbox2')" />
@@ -66,7 +66,7 @@
                   </div>
                 </div>
                 <div class="container">
-                  <div class="list" @click="changeMlp('Sigmoid')"><p>Sigmoid</p><img class="help" :src="getImage('icon_help')" /></div>
+                  <div class="list" @click="changeMlp('Softmax')"><p>Softmax</p><img class="help" :src="getImage('icon_help')" /></div>
                 </div>
                 <div class="container">
                   <div class="list" @click="changeMlp('Tanh')"><p>Tanh</p><img class="help" :src="getImage('icon_help')" /></div>
@@ -84,7 +84,7 @@
                   </div>
                 </div>
                 <div class="container">
-                  <div class="list" @click="changeCnn1('Softmax')"><p>Softmax</p><img class="help" :src="getImage('icon_help')" /></div>
+                  <div class="list" @click="changeCnn1('Sigmoid')"><p>Sigmoid</p><img class="help" :src="getImage('icon_help')" /></div>
                   <div class="tipbox">
                     <div class="gap" style="top:55px;left:-45px"></div>
                     <img :src="getImage('img_tipbox2')" />
@@ -92,7 +92,7 @@
                   </div>
                 </div>
                 <div class="container">
-                  <div class="list" @click="changeCnn1('Sigmoid')"><p>Sigmoid</p><img class="help" :src="getImage('icon_help')" /></div>
+                  <div class="list" @click="changeCnn1('Softmax')"><p>Softmax</p><img class="help" :src="getImage('icon_help')" /></div>
                 </div>
                 <div class="container">
                   <div class="list" @click="changeCnn1('Tanh')"><p>Tanh</p><img class="help" :src="getImage('icon_help')" /></div>
@@ -110,7 +110,7 @@
                   </div>
                 </div>
                 <div class="container">
-                  <div class="list" @click="changeCnn2('Softmax')"><p>Softmax</p><img class="help" :src="getImage('icon_help')" /></div>
+                  <div class="list" @click="changeCnn2('Sigmoid')"><p>Sigmoid</p><img class="help" :src="getImage('icon_help')" /></div>
                   <div class="tipbox">
                     <div class="gap" style="top:55px;left:-45px"></div>
                     <img :src="getImage('img_tipbox2')" />
@@ -118,7 +118,7 @@
                   </div>
                 </div>
                 <div class="container">
-                  <div class="list" @click="changeCnn2('Sigmoid')"><p>Sigmoid</p><img class="help" :src="getImage('icon_help')" /></div>
+                  <div class="list" @click="changeCnn2('Softmax')"><p>Softmax</p><img class="help" :src="getImage('icon_help')" /></div>
                 </div>
                 <div class="container">
                   <div class="list" @click="changeCnn2('Tanh')"><p>Tanh</p><img class="help" :src="getImage('icon_help')" /></div>
@@ -136,7 +136,7 @@
                   </div>
                 </div>
                 <div class="container">
-                  <div class="list" @click="changeCnn3('Softmax')"><p>Softmax</p><img class="help" :src="getImage('icon_help')" /></div>
+                  <div class="list" @click="changeCnn3('Sigmoid')"><p>Sigmoid</p><img class="help" :src="getImage('icon_help')" /></div>
                   <div class="tipbox">
                     <div class="gap" style="top:55px;left:-45px"></div>
                     <img :src="getImage('img_tipbox2')" />
@@ -144,7 +144,7 @@
                   </div>
                 </div>
                 <div class="container">
-                  <div class="list" @click="changeCnn3('Sigmoid')"><p>Sigmoid</p><img class="help" :src="getImage('icon_help')" /></div>
+                  <div class="list" @click="changeCnn3('Softmax')"><p>Softmax</p><img class="help" :src="getImage('icon_help')" /></div>
                 </div>
                 <div class="container">
                   <div class="list" @click="changeCnn3('Tanh')"><p>Tanh</p><img class="help" :src="getImage('icon_help')" /></div>
@@ -265,7 +265,7 @@
         <div class="rounded w-full mt-10" style="background: #1C2C35;height: 97px;" v-show="isShowFoot">
           <div class="bottom-font absolute right-0 flex items-center mx-4" style="height: 97px;">
             <div class="bg-black flex justify-center items-center h-16 w-40 rounded mx-4 cursor-pointer"><img :src="getImage('icon_code')" /><p class="ml-2 my-0">生成代码</p></div>
-            <div class="bg-black flex justify-center items-center h-16 w-40 rounded mx-4 cursor-pointer" @click="jumpTo('homepage',2)"><img :src="getImage('icon_code')" /><p class="ml-2 my-0">立即使用</p></div>
+            <div class="bg-black flex justify-center items-center h-16 w-40 rounded mx-4 cursor-pointer" @click="changeCurrentStep(2)"><img :src="getImage('icon_code')" /><p class="ml-2 my-0">立即使用</p></div>
           </div>
         </div>
       </div>
@@ -276,7 +276,6 @@
 import { ref, defineProps, onMounted, defineEmits } from "vue";
 import mathInput from "./mathinput.vue";
 import { useRouter } from "vue-router";
-import { fa, tr } from "element-plus/es/locale";
 const router = useRouter()
 const props = defineProps({
   isShowTitle: {
@@ -292,7 +291,7 @@ const props = defineProps({
     default: ""
   },
 })
-const emits = defineEmits(['changeActivation'])
+const emits = defineEmits(['changeActivation','changeCurrentStep'])
 const getImage = (name: string): string => {
   return new URL(`../assets/images/home/${name}.png`, import.meta.url).href;
 };
@@ -380,6 +379,9 @@ if(props.modelType == "mlp"){
     }
   ]
 }
+const changeCurrentStep = (value:number) => {
+  emits('changeCurrentStep',value)
+}
 const changeMlp = (value:string) => {
   emits("changeActivation",value)
   let str = `\\text{${value}}\\left(W_{\\left[i-1\\right]}\\cdot h_{\\left[i-1\\right]}+b_{\\left[i-1\\right]}\\right)`
@@ -388,11 +390,13 @@ const changeMlp = (value:string) => {
 let cnnvalue1 = 'Relu'
 let cnnvalue2 = 'Relu'
 const changeCnn1 = (value:string) => {
+  emits("changeActivation",value)
   cnnvalue1 = value
   let str = `\\text{${value}}(Conv2d_0,(\\text{${cnnvalue2}}(Conv2d_0(x))))`
   mathList.value[0].returnVal = str
 }
 const changeCnn2 = (value:string) => {
+  emits("changeActivation",value)
   cnnvalue2 = value
   let str = `\\text{${cnnvalue1}}(Conv2d_0,(\\text{${value}}(Conv2d_0(x))))`
   mathList.value[0].returnVal = str
@@ -581,7 +585,7 @@ p {
     /* 50%  {top:40px;width:20px;height:20px;border-radius: 20px;background: #5566FF;} */
     100% {top:60px;width:30px;height:30px;border-radius: 30px;background: #5566FF;}
 }
-.mask{width: 100%;height: 100%;position: absolute;z-index: 10;}
+.mask{width: 100%;position: absolute;z-index: 10;top: 15%;height: 70%;}
 .box {
   z-index: 20;
   top:0px;
