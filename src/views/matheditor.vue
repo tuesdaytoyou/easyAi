@@ -264,13 +264,31 @@
         
         <div class="rounded w-full mt-10" style="background: #1C2C35;height: 97px;" v-show="isShowFoot">
           <div class="bottom-font absolute right-0 flex items-center mx-4" style="height: 97px;">
-            <div class="bg-black flex justify-center items-center h-16 w-40 rounded mx-4 cursor-pointer"><img :src="getImage('icon_code')" /><p class="ml-2 my-0">生成代码</p></div>
+            <div class="bg-black flex justify-center items-center h-16 w-40 rounded mx-4 cursor-pointer" @click="dialogVisible=true"><img :src="getImage('icon_code')" /><p class="ml-2 my-0">生成代码</p></div>
             <div class="bg-black flex justify-center items-center h-16 w-40 rounded mx-4 cursor-pointer" @click="changeCurrentStep(2)"><img :src="getImage('icon_code')" /><p class="ml-2 my-0">立即使用</p></div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <el-dialog
+    style="background:#111A20"
+    v-model="dialogVisible"
+    width="30%"
+  >
+    <template #header>
+      <div style="color"></div>
+    </template>
+    <div>
+      <img :src="getImage('img_code')" />
+    </div>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button style="background: #000000;border: 2px solid #6BE1FF;">Copy</el-button>
+        <el-button style="background: linear-gradient(180deg, #6BE1FF 0%, #0098C2 118.27%);" type="primary">Download</el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 <script setup lang="ts">
 import { ref, defineProps, onMounted, defineEmits } from "vue";
@@ -295,6 +313,7 @@ const emits = defineEmits(['changeActivation','changeCurrentStep'])
 const getImage = (name: string): string => {
   return new URL(`../assets/images/home/${name}.png`, import.meta.url).href;
 };
+let dialogVisible = ref(false)
 let mathList = ref([
   {  
     moduleVal1: '',

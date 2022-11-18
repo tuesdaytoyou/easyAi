@@ -263,9 +263,9 @@
             >
               <template #content>
                 <div style="width:400px">
-                  Optimizer<br />
-                  优化器就是在深度学习反向传播过程中，指引损失函数（目标函数）的各个参数往正确的方向更新合适的大小，使得更新后的各个参数让损失函数（目标函数）值不断逼近全局最小。<br />
-                  你可能想要更换不同优化器使您的模型获得良好的预测结果。<br />
+                  Learning rate<br />
+                  学习率是优化算法中的一个可调参数，它决定了每次迭代的步长，它影响到新学习到的信息在多大程度上取代了旧信息，即机器学习模型 "学习 "速度。通常来说，初始学习率以 0.01 ~ 0.001 为宜。<br />
+                  <a target="_black" href="https://microsoft.github.io/ai-edu/%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/A2-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/%E7%AC%AC5%E6%AD%A5%20-%20%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB/12.3-%E5%AD%A6%E4%B9%A0%E7%8E%87%E4%B8%8E%E6%89%B9%E5%A4%A7%E5%B0%8F.html">Learn more</a>
                 </div>
               </template>
               <img class="inline-block ml-1 mb-1 cursor-pointer" :src="getImage('icon_help')" />
@@ -424,6 +424,19 @@
       </div>
     </div>
   </div>
+  <el-dialog
+    v-model="dialogVisible"
+    title="Tips"
+    width="30%"
+  >
+    <span>This is a message</span>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button >Copy</el-button>
+        <el-button type="primary">Download</el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 <script setup lang="ts">
 import axios from 'axios'
@@ -443,6 +456,7 @@ let model_type = ref('model')
 let modelScript1 = ref(false)
 let modelScript2 = ref(false)
 let showmenu = ref(false)
+let dialogVisible = ref(false)
 const getImage = (name: string): string => {
   return new URL(`../assets/images/home/${name}.png`, import.meta.url).href;
 };
