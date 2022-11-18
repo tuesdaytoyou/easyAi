@@ -19,12 +19,12 @@
       </div>
       <div class="header-title cursor-pointer" v-if="typeSelectDlg" @click="showmenu = !showmenu">Playable ML Module</div>
       <div style="width:668px;margin-left:442px" v-else>
-        <el-steps :space="200" :active="currentStep">
-          <el-step title="创建数据集" />
-          <el-step title="创建模型" />
-          <el-step title="训练" />
-          <el-step title="结果" />
-        </el-steps>
+        <a-steps v-model:current="currentStep">
+          <a-step title="创建数据集" />
+          <a-step title="创建模型" />
+          <a-step title="训练" />
+          <a-step title="结果" />
+        </a-steps>
       </div>
     </div>
     <div class="flex justify-center items-center flex-col" style="margin-top:107px" v-if="typeSelectDlg">
@@ -376,12 +376,12 @@
       <div class="gray-btn cursor-pointer header-img" @click="mainDlg = 'main'"><span>返回</span></div>
       <!-- <img class="header-img" :src="getImage('icon_back')" @click="mainDlg = 'main'" /> -->
       <div style="width:668px;margin-left:442px">
-        <el-steps :space="200" :active="currentStep">
-          <el-step title="创建数据集" />
-          <el-step title="创建模型" />
-          <el-step title="训练" />
-          <el-step title="结果" />
-        </el-steps>
+        <a-steps v-model:current="currentStep">
+          <a-step title="创建数据集" />
+          <a-step title="创建模型" />
+          <a-step title="训练" />
+          <a-step title="结果" />
+        </a-steps>
       </div>
       <div class="blue-btn cursor-pointer" style="position: absolute;right: 50px;" @click="mainDlg = 'main';currentStep = 1"><span>使用</span></div>
     </div>
